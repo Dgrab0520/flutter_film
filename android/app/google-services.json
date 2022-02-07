@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "152402414969",
+    "project_id": "film-edit-4bf0b",
+    "storage_bucket": "film-edit-4bf0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152402414969:android:46669c098eeeab543d73a8",
+        "android_client_info": {
+          "package_name": "com.film.flutter_film"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152402414969-04s9kjvinhl04b9emb80t47fu1qvkg77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwKzJFmqkgT2Xa2TfmXnQ0j4DN_Lt0CAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152402414969-04s9kjvinhl04b9emb80t47fu1qvkg77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
