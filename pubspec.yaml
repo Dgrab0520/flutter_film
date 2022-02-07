@@ -51,7 +51,7 @@ dependencies:
   path_provider: ^2.0.2
   path: ^1.8.0
   expandable:
-  iamport_flutter: ^0.9.15
+  iamport_flutter: ^0.10.1+1
   telephony: ^0.1.4
   carousel_slider: ^4.0.0
   select_form_field: ^2.2.0
@@ -59,6 +59,10 @@ dependencies:
   firebase_messaging: ^10.0.8
   cloud_functions: ^3.0.5
   flutter_secure_storage: ^5.0.2 #자동 로그인
+  intl: ^0.17.0
+
+dependency_overrides:
+  platform: ^3.1.0
 
 dev_dependencies:
   flutter_test:
