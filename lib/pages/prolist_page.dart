@@ -71,65 +71,61 @@ class _ProListPageState extends State<ProListPage> {
                 scrollDirection: Axis.vertical,
                 itemCount: _user_info!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: Get.width,
-                    child: GestureDetector(
-                        onTap: () {
-                          Get.toNamed(
-                              '/profilePPage/true?id=${_user_info![index].user_id}');
-                        },
-                        child: Container(
-                          height: 60.0,
-                          margin: EdgeInsets.symmetric(vertical: 5.0),
-                          width: Get.width,
-                          child: Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  'http://gowjr0771.cafe24.com/film_pro_profile/${_user_info![index].profile_img}',
+                  return InkWell(
+                      onTap: () {
+                        Get.toNamed(
+                            '/profilePPage/true?id=${_user_info![index].user_id}');
+                      },
+                      child: Container(
+                        height: 60.0,
+                        margin: EdgeInsets.symmetric(vertical: 5.0),
+                        width: Get.width,
+                        child: Row(
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                'http://gowjr0771.cafe24.com/film_pro_profile/${_user_info![index].profile_img}',
+                              ),
+                              radius: 20,
+                              backgroundColor: Colors.white,
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '${_user_info![index].skill}',
+                                  style: TextStyle(
+                                    fontSize: 10.0,
+                                  ),
                                 ),
-                                radius: 20,
-                                backgroundColor: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 20.0,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    '${_user_info![index].skill}',
-                                    style: TextStyle(
-                                      fontSize: 10.0,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${_user_info![index].com_name}',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    '${_user_info![index].area1} / ${_user_info![index].area2}',
-                                    style: TextStyle(
-                                        fontSize: 10.0, color: Colors.grey),
-                                  ),
-                                  //Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
-                            ],
-                          ),
-                          //     SizedBox(height: 10.0),
-                        )),
-                  );
+                                Text(
+                                  '${_user_info![index].com_name}',
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '${_user_info![index].area1} / ${_user_info![index].area2}',
+                                  style: TextStyle(
+                                      fontSize: 10.0, color: Colors.grey),
+                                ),
+                                //Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                              ],
+                            ),
+                          ],
+                        ),
+                      ));
                 })
             : Container(),
       ),
