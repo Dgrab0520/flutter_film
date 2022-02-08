@@ -788,7 +788,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                   _userType == 'pro'
-                      ? Container(
+                      ? SizedBox(
                           height: Get.height * 0.58,
                           child: Column(
                             children: <Widget>[
@@ -866,48 +866,57 @@ class _MainPageState extends State<MainPage> {
                             ],
                           ),
                         )
-                      : Container(
-                          child: Column(
-                            children: <Widget>[
-                              ListTile(
-                                title: Text(
-                                  '받은 견적서',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                onTap: () {
-                                  Get.toNamed('/customerList/true?id=$user_id');
-                                },
+                      : Column(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text(
+                                '받은 견적서',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              ListTile(
-                                title: Text(
-                                  '마이페이지',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                onTap: () {
-                                  Get.toNamed(
-                                      '/customerMyPage/$_isLogin?user_type=$_userType&&id=$user_id');
-                                },
+                              onTap: () {
+                                Get.toNamed('/customerList/true?id=$user_id');
+                              },
+                            ),
+                            ListTile(
+                              title: Text(
+                                '채팅',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              ListTile(
-                                title: Text(
-                                  '공지사항',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                onTap: () {
-                                  Get.toNamed('/noti/');
-                                },
+                              onTap: () {
+                                Get.toNamed('/chatlist/true?user_id=$user_id');
+                              },
+                            ),
+                            ListTile(
+                              title: Text(
+                                '마이페이지',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
-                                height: 100.0,
+                              onTap: () {
+                                Get.toNamed(
+                                    '/customerMyPage/$_isLogin?user_type=$_userType&&id=$user_id');
+                              },
+                            ),
+                            ListTile(
+                              title: Text(
+                                '공지사항',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.bold),
                               ),
-                            ],
-                          ),
+                              onTap: () {
+                                Get.toNamed('/noti/');
+                              },
+                            ),
+                            SizedBox(
+                              height: 100.0,
+                            ),
+                          ],
                         ),
                   Row(
                     children: <Widget>[

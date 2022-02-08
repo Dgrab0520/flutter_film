@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/chat_data.dart';
 import 'package:flutter_film/models/chat_model.dart';
-import 'package:flutter_film/models/select_estimate_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -16,16 +15,9 @@ class Chat_Page extends StatefulWidget {
 
 class _Chat_PageState extends State<Chat_Page> {
   String? estimate_id = Get.parameters['estimate_id'];
-  List<Select_Estimate> estimate = [
-    Select_Estimate(
-        order_id: "order_id",
-        estimate_id: "주문번호",
-        user_id: "고객",
-        pro_id: "전문가",
-        estimate_detail: "estimate_detail",
-        count: "count")
-  ];
-
+  String? userId = Get.parameters['user_id'];
+  String? pro_id = Get.parameters['pro_id'];
+  String? isPro = Get.parameters['isPro'];
   List<Chat> chatting = [];
 
   bool _isLoading = true;
@@ -35,12 +27,13 @@ class _Chat_PageState extends State<Chat_Page> {
   @override
   void initState() {
     estimate_id = Get.parameters['estimate_id'];
+    print(isPro);
     getChat();
     super.initState();
   }
 
   getChat() {
-    ChatData.getChat("estimateId").then((value) {
+    ChatData.getChat(estimate_id!).then((value) {
       print(value);
       setState(() {
         chatting = value;
@@ -60,7 +53,7 @@ class _Chat_PageState extends State<Chat_Page> {
           centerTitle: true,
           elevation: 1.0,
           title: Text(
-            '${estimate[0].user_id}'.split("@")[0],
+            isPro == "Cus" ? pro_id! : userId!.split("@")[0],
             style: TextStyle(
               color: Colors.black,
               fontSize: 16.0,
@@ -98,7 +91,9 @@ class _Chat_PageState extends State<Chat_Page> {
                                 return MyChat(
                                     text: chatting[index].text,
                                     createAt: chatting[index].createAt,
-                                    isPro: true);
+                                    isPro: chatting[index].isPro == isPro
+                                        ? true
+                                        : false);
                               }),
                         )),
                   ),
@@ -125,80 +120,35 @@ class _Chat_PageState extends State<Chat_Page> {
                               CupertinoIcons.eject_fill,
                             ),
                             onPressed: () {
-                              print('print');
-                              Chat chat = Chat(
-                                  id: 0,
-                                  estimateId: "estimateId",
-                                  estimate: "estimate",
-                                  text: chatController.text,
-                                  image: "",
-                                  isPro: "Pro",
-                                  createAt: "");
+                              if (chatController.text != "") {
+                                print('print');
+                                Chat chat = Chat(
+                                    id: 0,
+                                    estimateId: estimate_id!,
+                                    estimate: "estimate",
+                                    text: chatController.text,
+                                    image: "",
+                                    isPro: isPro!,
+                                    createAt: "");
 
-                              ChatData.putChat(chat).then((value) {
-                                print(value);
-                                if (value.isNotEmpty) {
-                                  chat.createAt = value[0];
-                                  setState(() {
-                                    // DateTime currentDate = DateTime.now();
-                                    // DateTime pastDate =
-                                    //     DateTime.parse(chatting[0].createAt);
-                                    //
-                                    // if ((currentDate
-                                    //                 .difference(pastDate)
-                                    //                 .inHours /
-                                    //             24)
-                                    //         .round() >
-                                    //     0) {
-                                    //   print(currentDate);
-                                    //   print(pastDate);
-                                    //   chatting.insert(
-                                    //       0,
-                                    //       Chat(
-                                    //           id: 0,
-                                    //           estimateId: "0",
-                                    //           text: "",
-                                    //           image: "",
-                                    //           isPro: "",
-                                    //           createAt:
-                                    //               DateTime.now().toString(),
-                                    //           estimate: ''));
-                                    // }DateTime currentDate = DateTime.now();
-                                    // DateTime pastDate =
-                                    //     DateTime.parse(chatting[0].createAt);
-                                    //
-                                    // if ((currentDate
-                                    //                 .difference(pastDate)
-                                    //                 .inHours /
-                                    //             24)
-                                    //         .round() >
-                                    //     0) {
-                                    //   print(currentDate);
-                                    //   print(pastDate);
-                                    //   chatting.insert(
-                                    //       0,
-                                    //       Chat(
-                                    //           id: 0,
-                                    //           estimateId: "0",
-                                    //           text: "",
-                                    //           image: "",
-                                    //           isPro: "",
-                                    //           createAt:
-                                    //               DateTime.now().toString(),
-                                    //           estimate: ''));
-                                    // }
-                                    chatting.insert(0, chat);
+                                ChatData.putChat(chat).then((value) {
+                                  print(value);
+                                  if (value.isNotEmpty) {
+                                    chat.createAt = value[0];
+                                    setState(() {
+                                      chatting.insert(0, chat);
 
-                                    chatController.text = "";
-                                    Timer(
-                                        Duration(milliseconds: 200),
-                                        () => scrollController.animateTo(0.0,
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.easeInOut));
-                                  });
-                                }
-                              });
+                                      chatController.text = "";
+                                      Timer(
+                                          Duration(milliseconds: 200),
+                                          () => scrollController.animateTo(0.0,
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut));
+                                    });
+                                  }
+                                });
+                              }
                             },
                           ),
                           contentPadding:

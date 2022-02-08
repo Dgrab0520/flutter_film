@@ -9,12 +9,12 @@ import 'package:flutter_film/datas/update_order_status_data.dart';
 import 'package:flutter_film/models/select_estimate_model.dart';
 import 'package:get/get.dart';
 
-class SendEstimate_Page extends StatefulWidget{
+class SendEstimate_Page extends StatefulWidget {
   @override
   _SendEstimate_PageState createState() => _SendEstimate_PageState();
 }
 
-class _SendEstimate_PageState extends State<SendEstimate_Page>{
+class _SendEstimate_PageState extends State<SendEstimate_Page> {
   TextEditingController estimateController = new TextEditingController();
   String? user_id;
   String? order_date;
@@ -28,12 +28,12 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
   List<Select_Estimate>? _checkEstimate;
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _isLoading = false;
     _isExsist = false;
@@ -50,7 +50,6 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     print('aasd           $user_token');
   }
 
-
   HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('sendFCM',
       options: HttpsCallableOptions(timeout: const Duration(seconds: 5)));
 
@@ -64,12 +63,12 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
         "title": title,
         "body": body,
       },
-    ).whenComplete(() =>
-        Get.snackbar('전송완료', '고객에게 전송이 완료되었습니다',)
-    );
+    ).whenComplete(() => Get.snackbar(
+          '전송완료',
+          '고객에게 전송이 완료되었습니다',
+        ));
     print(result.data);
   }
-
 
   //OrderId Random 생성
   String generateRandomString(int len) {
@@ -80,19 +79,17 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
         .join();
   }
 
-
-
   //견적 갯수 불러오기
-  _getSelectEstimate(){
-    Estimate_Select_Data.getEstimateSelect(order_id!).then((selectEstimate){
+  _getSelectEstimate() {
+    Estimate_Select_Data.getEstimateSelect(order_id!).then((selectEstimate) {
       setState(() {
         _selectEstimate = selectEstimate;
       });
-      if(selectEstimate.length == 0){
+      if (selectEstimate.length == 0) {
         setState(() {
           _isLoading = false;
         });
-      }else{
+      } else {
         setState(() {
           _isLoading = true;
         });
@@ -100,17 +97,18 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     });
   }
 
-  _checkEstimates(){
-    Estimate_Select_Data.getEstimateCheck(order_id!, pro_id).then((checkEstimate){
+  _checkEstimates() {
+    Estimate_Select_Data.getEstimateCheck(order_id!, pro_id)
+        .then((checkEstimate) {
       setState(() {
         _checkEstimate = checkEstimate;
       });
-      if(checkEstimate.length == 0){
+      if (checkEstimate.isEmpty) {
         print('ok');
         setState(() {
           _isExsist = false;
         });
-      }else{
+      } else {
         print('don');
         setState(() {
           _isExsist = true;
@@ -119,37 +117,38 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     });
   }
 
-  _addEstimate(){
-    RegisterEstimate_Data.addEstimate(order_id!, generateRandomString(12), user_id, pro_id, estimateController.text).then((result){
-      if(result == 'success'){
+  _addEstimate() {
+    RegisterEstimate_Data.addEstimate(order_id!, generateRandomString(12),
+            user_id, pro_id, estimateController.text)
+        .then((result) {
+      if (result == 'success') {
         sendFCM_Dir();
         _addPointInfo();
         print('addRegister success');
-      }else{
+      } else {
         print('addRegister fail');
       }
     });
   }
 
-  _addPointInfo(){
-    Register_PointInfo.addPointInfo(pro_id!, '-1500', '견적서 차감').then((result){
-      if(result == 'success'){
+  _addPointInfo() {
+    Register_PointInfo.addPointInfo(pro_id!, '-1500', '견적서 차감').then((result) {
+      if (result == 'success') {
         print('addpointInfo success');
         Get.back();
-      }else{
+      } else {
         print('addpointInfo fail');
       }
     });
   }
 
-
-  
-  _updateOrderStatus(){
-    UpdateOrderStatus_Data.updateOrderStatus(user_id!, order_date!).then((result){
-      if('success' == result){
+  _updateOrderStatus() {
+    UpdateOrderStatus_Data.updateOrderStatus(user_id!, order_date!)
+        .then((result) {
+      if ('success' == result) {
         print('삭제완료');
         Get.back();
-      }else{
+      } else {
         print('네트워크 에러');
       }
     });
@@ -162,158 +161,183 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('견적서 보내기', style:
-          TextStyle(
+        title: Text(
+          '견적서 보내기',
+          style: TextStyle(
             color: Colors.black,
             fontSize: 16.0,
           ),
         ),
-        leading: IconButton(icon: Icon(Icons.close, color: Colors.black,), onPressed: (){Get.back();},),
+        leading: IconButton(
+          icon: Icon(
+            Icons.close,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       backgroundColor: Color(0xFFf0f0f0),
       body: SingleChildScrollView(
-        child:
-          _isLoading!
-          ?
-            _selectEstimate![0].count == '5'
-            ?
-            Container(
-                height: Get.height*0.8,
-                width: Get.width,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 200.0,
-                    width: Get.width,
-                    margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
+          child: _isLoading!
+              ? _selectEstimate![0].count == '5'
+                  ? Container(
+                      height: Get.height * 0.8,
+                      width: Get.width,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 200.0,
+                          width: Get.width,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 20.0),
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 0.2),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.warning_outlined,
+                                size: 60.0,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                height: 2.0,
+                              ),
+                              Text(
+                                '마감 된 요청서입니다',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0),
+                              ),
+                              Spacer(),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    _updateOrderStatus();
+                                  },
+                                  child: Text(
+                                    '     돌아가기     ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )),
+                              SizedBox(
+                                height: 15.0,
+                              )
+                            ],
+                          ),
+                        ),
+                      ))
+                  : Container(
+                      width: Get.width,
+                      height: 550.0,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 20.0),
+                      decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(width: 0.2),
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
-                        SizedBox(height: 2.0,),
-                        Text('마감 된 요청서입니다', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
-                        Spacer(),
-                        ElevatedButton(
-                            onPressed: (){
-                              _updateOrderStatus();
-                            },
-                            child:
-                            Text('     돌아가기     ', style:
-                            TextStyle(
-                                fontWeight: FontWeight.bold
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '견적을 보낸 전문가 수 : ${_selectEstimate![0].count} / 5',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
                             ),
-                            )
-                        ),
-                        SizedBox(height: 15.0,)
-                      ],
-                    ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Container(
+                              width: Get.width,
+                              height: 400.0,
+                              color: Color(0xFFf5f5f5),
+                              child: TextField(
+                                controller: estimateController,
+                                maxLines: 20,
+                                decoration: InputDecoration(
+                                  hintText:
+                                      "작업 관련 내용 및 금액 등에 대한 상세한 내용을 입력해주세요",
+                                  hintStyle: TextStyle(fontSize: 13.0),
+                                  fillColor: Color(0xFFf5f5f5),
+                                  filled: true,
+                                ),
+                              )),
+                          SizedBox(
+                            height: 15.0,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                if (_isExsist!) {
+                                  Get.snackbar('', '이미 보낸 견적서입니다.');
+                                } else {
+                                  _addEstimate();
+                                }
+                              },
+                              child: Text(
+                                '견적서 보내기 | 1500pt 차감',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      ),
+                    )
+              : Container(
+                  width: Get.width,
+                  height: 550.0,
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                )
-              )
-            :
-            Container(
-            width: Get.width,
-            height: 550.0,
-            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
-              children: <Widget>[
-                Text('견적을 보낸 전문가 수 : ${_selectEstimate![0].count} / 5', style:
-                TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-                SizedBox(height: 20.0,),
-                Container(
-                    width: Get.width,
-                    height: 400.0,
-                    color: Color(0xFFf5f5f5),
-                    child: TextField(
-                      controller: estimateController,
-                      maxLines: 20,
-                      decoration: InputDecoration(
-                        hintText: "작업 관련 내용 및 금액 등에 대한 상세한 내용을 입력해주세요",
-                        hintStyle: TextStyle(
-                            fontSize: 13.0
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        '견적을 보낸 전문가 수 : 0 / 5',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
                         ),
-                        fillColor: Color(0xFFf5f5f5),
-                        filled: true,
                       ),
-                    )
-                ),
-                SizedBox(height: 15.0,),
-                ElevatedButton(
-                    onPressed: (){
-                      if(_isExsist!){
-                        Get.snackbar('','이미 보낸 견적서입니다.');
-                      }else{
-                        _addEstimate();
-                      }
-                    },
-                    child: Text('견적서 보내기 | 1500pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
-              ],
-            ),
-          )
-          :
-          Container(
-            width: Get.width,
-            height: 550.0,
-            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
-              children: <Widget>[
-                Text('견적을 보낸 전문가 수 : 0 / 5', style:
-                TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                ),
-                SizedBox(height: 20.0,),
-                Container(
-                    width: Get.width,
-                    height: 400.0,
-                    color: Color(0xFFf5f5f5),
-                    child: TextField(
-                      controller: estimateController,
-                      maxLines: 20,
-                      decoration: InputDecoration(
-                        hintText: "작업 관련 내용 및 금액 등에 대한 상세한 내용을 입력해주세요",
-                        hintStyle: TextStyle(
-                            fontSize: 13.0
-                        ),
-                        fillColor: Color(0xFFf5f5f5),
-                        filled: true,
+                      SizedBox(
+                        height: 20.0,
                       ),
-                    )
-                ),
-                SizedBox(height: 15.0,),
-                ElevatedButton(
-                    onPressed: (){
-                      print(_isExsist);
-                      _addEstimate();
-
-
-                    },
-                    child: Text('견적서 보내기 | 1500pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
-              ],
-            ),
-          )
-
-      ),
+                      Container(
+                          width: Get.width,
+                          height: 400.0,
+                          color: Color(0xFFf5f5f5),
+                          child: TextField(
+                            controller: estimateController,
+                            maxLines: 20,
+                            decoration: InputDecoration(
+                              hintText: "작업 관련 내용 및 금액 등에 대한 상세한 내용을 입력해주세요",
+                              hintStyle: TextStyle(fontSize: 13.0),
+                              fillColor: Color(0xFFf5f5f5),
+                              filled: true,
+                            ),
+                          )),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            print(_isExsist);
+                            _addEstimate();
+                          },
+                          child: Text(
+                            '견적서 보내기 | 1500pt 차감',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))
+                    ],
+                  ),
+                )),
     );
   }
 }

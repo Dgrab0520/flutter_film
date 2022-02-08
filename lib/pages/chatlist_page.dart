@@ -9,20 +9,33 @@ class Chatlist_Page extends StatefulWidget {
 }
 
 class _Chatlist_PageState extends State<Chatlist_Page> {
-  List<Select_Estimate> estimate = [
-    Select_Estimate(
-        order_id: "order_id",
-        estimate_id: "주문번호",
-        user_id: "고객",
-        pro_id: "전문가",
-        estimate_detail: "estimate_detail",
-        count: "count")
-  ];
+  List<Select_Estimate> estimate = [];
   String? pro_id = Get.parameters['pro_id'];
+  String? user_id = Get.parameters['user_id'];
   bool _isLoading = true;
+  String isPro = "Cus";
 
   getEstimate() {
     Estimate_Select_Data.getProEstimate(pro_id!).then((value) {
+      print(value);
+      setState(() {
+        estimate = value;
+      });
+      if (value.isEmpty) {
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = true;
+        });
+      }
+    });
+  }
+
+  getUserEstimate() {
+    Estimate_Select_Data.getUserEstimate(user_id!).then((value) {
+      print(value);
       setState(() {
         estimate = value;
       });
@@ -41,7 +54,8 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
   @override
   void initState() {
     pro_id = Get.parameters['pro_id'];
-    //getEstimate();
+    user_id == null ? getEstimate() : getUserEstimate();
+    isPro = user_id == null ? "Pro" : "Cus";
     super.initState();
   }
 
@@ -88,7 +102,7 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
                             onTap: () {
                               print('${estimate[index].user_id}');
                               Get.toNamed(
-                                  '/chat/true?estimate_id=${estimate[index].estimate_id}');
+                                  '/chat/true?estimate_id=${estimate[index].estimate_id}&&user_id=${estimate[index].user_id}&&pro_id=${estimate[index].pro_id}&&isPro=$isPro');
                             },
                             child: Column(
                               children: [

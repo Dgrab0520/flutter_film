@@ -270,6 +270,12 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         onPressed: () => _loginWithKakao(),
                                       )),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Get.offAllNamed(
+                                            '/main/true?type=customer');
+                                      },
+                                      child: Text("test")),
                                   SizedBox(
                                     height: 150.0,
                                   ),
