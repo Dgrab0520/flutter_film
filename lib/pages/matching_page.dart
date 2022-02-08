@@ -40,7 +40,7 @@ class _MatchingPageState extends State<MatchingPage> {
       setState(() {
         _prolist = prolist;
       });
-      if (prolist.length == 0) {
+      if (prolist.isEmpty) {
         _isLoading = false;
       } else {
         setState(() {
@@ -215,7 +215,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                                       ),
                                                       onPressed: () {
                                                         Get.toNamed(
-                                                            '/sms/true?id=${_prolist![index].pro_id}&&order_id=$order_id&&user_id=$user_id');
+                                                            '/sms/true?id=${_prolist![index].pro_id}&&estimate_id=${_prolist![index].estimate_id}&&user_id=$user_id');
                                                       },
                                                     )
                                                   : ElevatedButton(

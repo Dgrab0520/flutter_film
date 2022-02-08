@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
@@ -19,10 +20,13 @@ class _Chat_PageState extends State<Chat_Page> {
   String? pro_id = Get.parameters['pro_id'];
   String? isPro = Get.parameters['isPro'];
   List<Chat> chatting = [];
+  bool isChat = false;
 
   bool _isLoading = true;
   TextEditingController chatController = TextEditingController();
   ScrollController scrollController = ScrollController();
+
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -39,6 +43,12 @@ class _Chat_PageState extends State<Chat_Page> {
         chatting = value;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -106,50 +116,81 @@ class _Chat_PageState extends State<Chat_Page> {
                           border: Border.all(width: 1.0, color: Colors.grey),
                           color: Colors.white),
                       child: TextField(
+                        focusNode: focusNode,
                         textAlignVertical: TextAlignVertical.center,
                         controller: chatController,
                         keyboardType: TextInputType.multiline,
                         minLines: 1,
                         maxLines: 4,
                         onTap: () {},
-                        onChanged: (text) {},
-                        // style: TextStyle(fontSize: 20),
+                        onChanged: (text) {
+                          setState(() {
+                            if (text != "") {
+                              isChat = true;
+                            } else {
+                              isChat = false;
+                            }
+                          });
+                        },
                         decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              CupertinoIcons.eject_fill,
-                            ),
-                            onPressed: () {
-                              if (chatController.text != "") {
-                                print('print');
-                                Chat chat = Chat(
-                                    id: 0,
-                                    estimateId: estimate_id!,
-                                    estimate: "estimate",
-                                    text: chatController.text,
-                                    image: "",
-                                    isPro: isPro!,
-                                    createAt: "");
+                          suffixIcon: Transform.rotate(
+                            angle: focusNode.hasFocus
+                                ? isChat
+                                    ? 90 * math.pi / 180
+                                    : 180 * math.pi / 180
+                                : 360 * math.pi / 180,
+                            child: IconButton(
+                              icon: Icon(
+                                CupertinoIcons.eject_fill,
+                              ),
+                              onPressed: () {
+                                if (chatController.text != "") {
+                                  String text = chatController.text
+                                      .replaceFirst(RegExp(r'^[\n, ]+'), "");
 
-                                ChatData.putChat(chat).then((value) {
-                                  print(value);
-                                  if (value.isNotEmpty) {
-                                    chat.createAt = value[0];
-                                    setState(() {
-                                      chatting.insert(0, chat);
+                                  if (text != "") {
+                                    print('print');
+                                    Chat chat = Chat(
+                                        id: 0,
+                                        estimateId: estimate_id!,
+                                        estimate: "estimate",
+                                        text: chatController.text,
+                                        image: "",
+                                        isPro: isPro!,
+                                        createAt: "");
 
-                                      chatController.text = "";
-                                      Timer(
-                                          Duration(milliseconds: 200),
-                                          () => scrollController.animateTo(0.0,
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut));
+                                    ChatData.putChat(chat).then((value) {
+                                      print(value);
+                                      if (value.isNotEmpty) {
+                                        chat.createAt = value[0];
+                                        setState(() {
+                                          chatting.insert(0, chat);
+
+                                          chatController.text = "";
+                                          isChat = false;
+                                          Timer(
+                                              Duration(milliseconds: 200),
+                                              () => scrollController.animateTo(
+                                                  0.0,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  curve: Curves.easeInOut));
+                                        });
+                                      }
                                     });
+                                  } else {
+                                    chatController.text = "";
+                                    FocusScope.of(context).unfocus();
                                   }
-                                });
-                              }
-                            },
+                                } else {
+                                  if (focusNode.hasFocus) {
+                                    FocusScope.of(context).unfocus();
+                                  } else {
+                                    focusNode.requestFocus();
+                                  }
+                                }
+                              },
+                            ),
                           ),
                           contentPadding:
                               EdgeInsets.only(left: 5, top: 5, bottom: 5),

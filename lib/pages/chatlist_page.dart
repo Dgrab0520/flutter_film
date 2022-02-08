@@ -84,61 +84,47 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
         ),
       ),
       backgroundColor: Color(0xFFf0f0f0),
-      body: Container(
-        height: Get.height,
-        width: Get.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 10.0),
-                height: Get.height * 0.91,
-                width: Get.width,
-                child: _isLoading
-                    ? ListView.builder(
-                        itemCount: estimate.length,
-                        itemBuilder: (_, int index) {
-                          return InkWell(
-                            onTap: () {
-                              print('${estimate[index].user_id}');
-                              Get.toNamed(
-                                  '/chat/true?estimate_id=${estimate[index].estimate_id}&&user_id=${estimate[index].user_id}&&pro_id=${estimate[index].pro_id}&&isPro=$isPro');
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  width: Get.width,
-                                  height: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text("${estimate[index].user_id}"),
-                                      Text("${estimate[index].pro_id}"),
-                                      Text("${estimate[index].estimate_id}"),
-                                    ],
-                                  ),
-                                ),
-                                Divider(
-                                  height: 0.1,
-                                  thickness: 0.5,
-                                  color: Colors.grey,
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
+      body: _isLoading
+          ? ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: estimate.length,
+              itemBuilder: (_, int index) {
+                return InkWell(
+                  onTap: () {
+                    print('${estimate[index].user_id}');
+                    Get.toNamed(
+                        '/chat/true?estimate_id=${estimate[index].estimate_id}&&user_id=${estimate[index].user_id}&&pro_id=${estimate[index].pro_id}&&isPro=$isPro');
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        width: Get.width,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            Text("${estimate[index].user_id}"),
+                            Text("${estimate[index].pro_id}"),
+                            Text("${estimate[index].estimate_id}"),
+                          ],
+                        ),
                       ),
-              )
-            ],
-          ),
-        ),
-      ),
+                      Divider(
+                        height: 0.1,
+                        thickness: 0.5,
+                        color: Colors.grey,
+                      )
+                    ],
+                  ),
+                );
+              },
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
