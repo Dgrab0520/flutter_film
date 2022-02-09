@@ -20,6 +20,8 @@ class _SmsPageState extends State<SmsPage> {
   String? pro_id;
   String? user_id;
   String? estimate_id;
+  String? com_name;
+  String? token;
 
   //telephony
   String _message = "";
@@ -35,6 +37,8 @@ class _SmsPageState extends State<SmsPage> {
     pro_id = Get.parameters['id'];
     user_id = Get.parameters['user_id'];
     estimate_id = Get.parameters['estimate_id'];
+    com_name = Get.parameters['com_name'];
+    token = Get.parameters['token'];
     print(estimate_id);
     _isLoading = false;
     _user_info = [];
@@ -232,9 +236,10 @@ class _SmsPageState extends State<SmsPage> {
                         if (_isAgree == true) {
                           RegisterEstimate_Data.updateState(estimate_id!)
                               .then((value) {
-                            if (value != "error") {
+                            print(value);
+                            if (value == "success") {
                               Get.offNamed(
-                                  '/chat/true?estimate_id=$estimate_id&&user_id=$user_id&&pro_id=$pro_id&&isPro=Cus');
+                                  '/chat/true?estimate_id=$estimate_id&&user_id=$user_id&&com_name=$com_name&&isPro=Cus&&index=0&&token=$token');
                               //Get.toNamed('/chatlist/true?user_id=$user_id');
                             }
                           });

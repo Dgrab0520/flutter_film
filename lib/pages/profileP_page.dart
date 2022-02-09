@@ -3,6 +3,7 @@ import 'package:flutter_film/datas/pro_select_data.dart';
 import 'package:flutter_film/datas/select_rating_data.dart';
 import 'package:flutter_film/models/pro_select_model.dart';
 import 'package:flutter_film/models/select_rating_model.dart';
+import 'package:flutter_film/pages/detailscreen.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
@@ -291,61 +292,96 @@ class _ProfilePPageState extends State<ProfilePPage> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img1}',
-                                    width: 130.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(DetailScreen(
+                                        path:
+                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img1}'));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img1}',
+                                      width: 130.0,
+                                      height: 130.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   width: 10.0,
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img2}',
-                                    width: 130.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(DetailScreen(
+                                        path:
+                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img2}'));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img2}',
+                                      width: 130.0,
+                                      height: 130.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   width: 10.0,
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img3}',
-                                    width: 130.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(DetailScreen(
+                                        path:
+                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img3}'));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img3}',
+                                      width: 130.0,
+                                      height: 130.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   width: 10.0,
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img4}',
-                                    width: 130.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(DetailScreen(
+                                        path:
+                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img4}'));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img4}',
+                                      width: 130.0,
+                                      height: 130.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
                                   width: 10.0,
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.network(
-                                    'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img5}',
-                                    width: 130.0,
-                                    height: 130.0,
-                                    fit: BoxFit.cover,
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(DetailScreen(
+                                        path:
+                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img5}'));
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: Image.network(
+                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img5}',
+                                      width: 130.0,
+                                      height: 130.0,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(

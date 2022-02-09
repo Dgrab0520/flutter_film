@@ -215,7 +215,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                                       ),
                                                       onPressed: () {
                                                         Get.toNamed(
-                                                            '/sms/true?id=${_prolist![index].pro_id}&&estimate_id=${_prolist![index].estimate_id}&&user_id=$user_id');
+                                                            '/sms/true?id=${_prolist![index].pro_id}&&estimate_id=${_prolist![index].estimate_id}&&user_id=$user_id&&com_name=${_prolist![index].com_name}&&token=${_prolist![index].token}');
                                                       },
                                                     )
                                                   : ElevatedButton(

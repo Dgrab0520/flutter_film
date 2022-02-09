@@ -9,6 +9,7 @@ class Order_ProList {
   String com_name;
   String area1;
   String profile_img;
+  String token;
 
   Order_ProList({
     required this.order_id,
@@ -21,6 +22,7 @@ class Order_ProList {
     required this.com_name,
     required this.area1,
     required this.profile_img,
+    required this.token,
   });
 
   factory Order_ProList.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class Order_ProList {
       com_name: json['com_name'] as String,
       area1: json['area1'] as String,
       profile_img: json['profile_img'] as String,
+      token: json['pro_token'] as String,
     );
   }
 }

@@ -272,6 +272,7 @@ class _Chat_PageState extends State<Chat_Page> {
                                                 Duration(milliseconds: 300),
                                             curve: Curves.easeInOut));
                                   });
+                                  FocusScope.of(context).unfocus();
                                   final HttpsCallableResult result =
                                       await callable.call(
                                     <String, dynamic>{

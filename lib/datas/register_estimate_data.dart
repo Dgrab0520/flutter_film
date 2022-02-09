@@ -27,11 +27,11 @@ class RegisterEstimate_Data {
     }
   }
 
-  static Future<String> updateState(String order_id) async {
+  static Future<String> updateState(String estimate_id) async {
     try {
       var map = Map<String, dynamic>();
       map['action'] = _UPDATE_STATE_ACTION;
-      map['order_id'] = order_id;
+      map['estimate_id'] = estimate_id;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('Update Estimate State Response: ${response.body}');
       if ('success' == response.body) {

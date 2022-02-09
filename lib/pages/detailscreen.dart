@@ -20,7 +20,7 @@ class _DetailScreenState extends State<DetailScreen> {
       body: GestureDetector(
         child: Center(
           child: PhotoView(
-            minScale: 0.5,
+            minScale: 0.1,
             imageProvider: NetworkImage(widget.path),
           ),
         ),
