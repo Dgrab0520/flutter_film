@@ -1,7 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/select_estimate_data.dart';
+import 'package:flutter_film/main.dart';
 import 'package:flutter_film/models/select_estimate_model.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class Chatlist_Page extends StatefulWidget {
   @override
@@ -9,7 +12,6 @@ class Chatlist_Page extends StatefulWidget {
 }
 
 class _Chatlist_PageState extends State<Chatlist_Page> {
-  List<Select_Estimate> estimate = [];
   String? pro_id = Get.parameters['pro_id'];
   String? user_id = Get.parameters['user_id'];
   bool _isLoading = true;
@@ -20,16 +22,12 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
       print(value);
       setState(() {
         estimate = value;
-      });
-      if (value.isEmpty) {
-        setState(() {
+        if (value.isEmpty) {
           _isLoading = false;
-        });
-      } else {
-        setState(() {
+        } else {
           _isLoading = true;
-        });
-      }
+        }
+      });
     });
   }
 
@@ -38,22 +36,26 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
       print(value);
       setState(() {
         estimate = value;
-      });
-      if (value.isEmpty) {
-        setState(() {
+        if (value.isEmpty) {
           _isLoading = false;
-        });
-      } else {
-        setState(() {
+        } else {
           _isLoading = true;
-        });
-      }
+        }
+      });
     });
   }
 
   @override
   void initState() {
-    pro_id = Get.parameters['pro_id'];
+    isChattingRoom = true;
+
+    FirebaseMessaging.onMessage.listen((message) {
+      setState(() {
+        _isLoading = false;
+      });
+      user_id == null ? getEstimate() : getUserEstimate();
+      isPro = user_id == null ? "Pro" : "Cus";
+    });
     user_id == null ? getEstimate() : getUserEstimate();
     isPro = user_id == null ? "Pro" : "Cus";
     super.initState();
@@ -86,45 +88,95 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
       backgroundColor: Color(0xFFf0f0f0),
       body: _isLoading
           ? ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: estimate.length,
-              itemBuilder: (_, int index) {
-                return InkWell(
-                  onTap: () {
-                    print('${estimate[index].user_id}');
-                    Get.toNamed(
-                        '/chat/true?estimate_id=${estimate[index].estimate_id}&&user_id=${estimate[index].user_id}&&pro_id=${estimate[index].pro_id}&&isPro=$isPro');
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(10.0),
-                        width: Get.width,
-                        height: 100.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            Text("${estimate[index].user_id}"),
-                            Text("${estimate[index].pro_id}"),
-                            Text("${estimate[index].estimate_id}"),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        height: 0.1,
-                        thickness: 0.5,
-                        color: Colors.grey,
-                      )
-                    ],
-                  ),
-                );
+              itemBuilder: (BuildContext context, int index) {
+                return ChatBox(
+                    estimate: estimate[index], index: index, isPro: isPro);
               },
             )
           : const Center(
               child: CircularProgressIndicator(),
             ),
+    );
+  }
+}
+
+class ChatBox extends StatefulWidget {
+  const ChatBox({
+    Key? key,
+    required this.index,
+    required this.isPro,
+    required this.estimate,
+  }) : super(key: key);
+  final int index;
+  final String isPro;
+  final Select_Estimate estimate;
+
+  _ChatBoxState createState() => _ChatBoxState();
+}
+
+class _ChatBoxState extends State<ChatBox> {
+  String chat = "";
+
+  @override
+  void initState() {
+    chat = widget.estimate.chat == "" ? "사진을 보냈습니다." : widget.estimate.chat;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        print(widget.estimate.user_id);
+        var result = await Get.toNamed(
+            '/chat/true?estimate_id=${widget.estimate.estimate_id}&&user_id=${widget.estimate.user_id}&&com_name=${widget.estimate.com_name}&&isPro=${widget.isPro}&&index=${widget.index}&&token=${widget.estimate.token}');
+        print(result);
+        print(widget.estimate.chat);
+        setState(() {
+          chat =
+              widget.estimate.chat == "" ? "사진을 보냈습니다." : widget.estimate.chat;
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        width: Get.width,
+        height: 100.0,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              widget.isPro == "Cus"
+                  ? widget.estimate.com_name
+                  : widget.estimate.user_id,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            Flexible(
+              child: Text(
+                chat,
+                style: const TextStyle(color: Colors.black45),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(
+                    widget.estimate.chat == " "
+                        ? widget.estimate.estimate_date
+                        : widget.estimate.createAt)),
+                style: const TextStyle(fontSize: 12, color: Colors.black45),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

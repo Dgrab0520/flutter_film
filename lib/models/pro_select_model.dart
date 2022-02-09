@@ -1,4 +1,4 @@
-class Pro_Select{
+class Pro_Select {
   String user_id;
   String introduce;
   String basic;
@@ -27,20 +27,21 @@ class Pro_Select{
     required this.pro_token,
   });
 
-  factory Pro_Select.fromJson(Map<String, dynamic> json){
+  factory Pro_Select.fromJson(Map<String, dynamic> json) {
     return Pro_Select(
-      user_id: json['user_id'] as String,
-      introduce: json['introduce'] as String,
-      basic: json['basic'] as String,
-      company: json['company'] as String,
-      img1: json['img1'] as String,
-      img2: json['img2'] as String,
-      img3: json['img3'] as String,
-      img4: json['img4'] as String,
-      img5: json['img5'] as String,
-      com_name: json['com_name'] as String,
-      profile_img: json['profile_img'] as String,
-      pro_token: json['pro_token'] as String,
+      user_id: json['user_id'] == null ? "" : json['user_id'] as String,
+      introduce: json['introduce'] == null ? "" : json['introduce'] as String,
+      basic: json['basic'] == null ? "" : json['basic'] as String,
+      company: json['company'] == null ? "" : json['company'] as String,
+      img1: json['img1'] == null ? "" : json['img1'] as String,
+      img2: json['img2'] == null ? "" : json['img2'] as String,
+      img3: json['img3'] == null ? "" : json['img3'] as String,
+      img4: json['img4'] == null ? "" : json['img4'] as String,
+      img5: json['img5'] == null ? "" : json['img5'] as String,
+      com_name: json['com_name'] == null ? "" : json['com_name'] as String,
+      profile_img:
+          json['profile_img'] == null ? "" : json['profile_img'] as String,
+      pro_token: json['pro_token'] == null ? "" : json['pro_token'] as String,
     );
   }
 }

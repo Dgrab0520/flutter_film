@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/customer_area_data.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
@@ -272,6 +274,11 @@ class _LoginPageState extends State<LoginPage> {
                                       )),
                                   ElevatedButton(
                                       onPressed: () {
+                                        FirebaseMessaging.instance
+                                            .getToken()
+                                            .then((value) =>
+                                                Area_Data.updateToken(
+                                                    "None", value!));
                                         Get.offAllNamed(
                                             '/main/true?type=customer');
                                       },

@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 
 import '../models/select_estimate_model.dart';
 
+List<Select_Estimate> estimate = [];
+
 class Estimate_Select_Data {
   static const ROOT = 'http://gowjr0771.cafe24.com/film_estimate_select.php';
   static const _SELECT_ESTIMATE_ACTION = 'ESTIMATE_SELECT';

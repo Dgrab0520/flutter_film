@@ -60,6 +60,7 @@ dependencies:
   cloud_functions: ^3.0.5
   flutter_secure_storage: ^5.0.2 #자동 로그인
   intl: ^0.17.0
+  photo_view: ^0.13.0
 
 dependency_overrides:
   platform: ^3.1.0

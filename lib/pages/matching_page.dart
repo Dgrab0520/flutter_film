@@ -175,7 +175,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                               style: TextStyle(
                                                 fontSize: 10.0,
                                               )),
-                                          Text('${_prolist![index].com_name}',
+                                          Text(_prolist![index].com_name,
                                               style: TextStyle(
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w700)),
@@ -278,7 +278,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.vertical,
                                       child: Text(
-                                          '${_prolist![index].estimate_detail}'),
+                                          _prolist![index].estimate_detail),
                                     )),
                                 SizedBox(
                                   height: 3.0,
@@ -286,7 +286,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: Text(
-                                    '${_prolist![index].estimate_date}',
+                                    _prolist![index].estimate_date,
                                     style: TextStyle(
                                         fontSize: 12.0,
                                         fontWeight: FontWeight.w400,
