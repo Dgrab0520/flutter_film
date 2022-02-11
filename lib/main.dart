@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashPage(),
+        home: const SplashPage(),
         getPages: [
           GetPage(name: '/main/:param', page: () => MainPage()),
           //MainPage
@@ -118,11 +118,11 @@ class MyApp extends StatelessWidget {
           ),
           GetPage(
             name: '/chatlist/:param',
-            page: () => Chatlist_Page(),
+            page: () => ChatListPage(),
           ),
           GetPage(
             name: '/chat/:param',
-            page: () => Chat_Page(),
+            page: () => ChatPage(),
           ),
           GetPage(
             name: '/deposit/:par`am',
@@ -223,15 +223,15 @@ class _SplashPageState extends State<SplashPage> {
           Get.defaultDialog(
               title: title!,
               content: Text(body!),
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                   fontSize: 15.0,
                   color: Colors.deepOrange,
                   fontWeight: FontWeight.bold),
-              middleTextStyle: TextStyle(fontSize: 11.0));
+              middleTextStyle: const TextStyle(fontSize: 11.0));
         } else {
           if (!isChattingRoom) {
             Get.snackbar("채팅", "메세지가 도착했습니다",
-                duration: Duration(milliseconds: 1200));
+                duration: const Duration(milliseconds: 1200));
           }
         }
       }

@@ -743,6 +743,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                   height: Get.height * 0.5,
                                   width: Get.width,
                                   child: ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
                                       itemCount: _ratingSelect!.length > 5
                                           ? 5
@@ -773,7 +774,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                                       Row(
                                                         children: <Widget>[
                                                           Text(
-                                                            '${_ratingSelect![index].user_id.substring(0, 5)}****',
+                                                            '${(_ratingSelect![index].user_id).substring(0, 5)}****',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,

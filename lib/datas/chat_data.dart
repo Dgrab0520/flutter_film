@@ -6,17 +6,12 @@ import 'package:flutter_film/models/chat_model.dart';
 import 'package:http/http.dart' as http;
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-Random _rnd = Random();
+final Random _rnd = Random();
 String getRandomString() => String.fromCharCodes(Iterable.generate(
     10, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 class ChatData {
-  static const ROOT = "http://gowjr0771.cafe24.com/film_chat.php";
-  static const LIST_ACTION = "LIST";
-  static const WRITE_ACTION = "WRITE";
-  static const CHAT_LIST_ACTION = "CHAT_LIST";
-  static const USER_CHAT_LIST_ACTION = "USER_CHAT_LIST";
-  static const CUS_CHECK_ACTION = 'CUS_CHECK';
+  static const root = "http://gowjr0771.cafe24.com/film_chat.php";
 
   // //전문가일때 채팅목록 불러오기
   // static Future<List<ChatRoom>> getChatList(
@@ -67,9 +62,9 @@ class ChatData {
     print("estimateId : $estimateId");
     try {
       var map = <String, dynamic>{};
-      map['action'] = LIST_ACTION;
+      map['action'] = "LIST";
       map['estimateId'] = estimateId;
-      final response = await http.post(Uri.parse(ROOT), body: map);
+      final response = await http.post(Uri.parse(root), body: map);
       print('Chat Response : ${response.body}');
 
       if (response.statusCode == 200) {
@@ -116,9 +111,9 @@ class ChatData {
         chat.estimateId.toString());
     String imageName = getRandomString() + ".gif";
     try {
-      var url = Uri.parse(ROOT);
+      var url = Uri.parse(root);
       var request = http.MultipartRequest('POST', url);
-      request.fields['action'] = WRITE_ACTION;
+      request.fields['action'] = "WRITE";
       request.fields['estimateId'] = chat.estimateId.toString();
       request.fields['text'] = chat.text;
       request.fields['image'] = chat.image == "true" ? imageName : "";

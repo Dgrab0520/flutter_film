@@ -17,22 +17,24 @@ import 'package:intl/intl.dart';
 
 import 'detailscreen.dart';
 
-class Chat_Page extends StatefulWidget {
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
   @override
-  _Chat_PageState createState() => _Chat_PageState();
+  _ChatPageState createState() => _ChatPageState();
 }
 
-class _Chat_PageState extends State<Chat_Page> {
-  String? estimate_id = Get.parameters['estimate_id'];
+class _ChatPageState extends State<ChatPage> {
+  String? estimateId = Get.parameters['estimate_id'];
   String? userId = Get.parameters['user_id'];
-  String? com_name = Get.parameters['com_name'];
+  String? comName = Get.parameters['com_name'];
   String? isPro = Get.parameters['isPro'];
   int chatIndex = int.parse(Get.parameters['index']!);
   List<Chat> chatting = [];
   bool isChat = false;
   String? token = Get.parameters['token'];
 
-  bool _isLoading = true;
+  final bool _isLoading = true;
   TextEditingController chatController = TextEditingController();
   ScrollController scrollController = ScrollController();
 
@@ -41,9 +43,11 @@ class _Chat_PageState extends State<Chat_Page> {
   HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('sendFCM',
       options: HttpsCallableOptions(timeout: const Duration(seconds: 5)));
 
+  final estimateController = Get.put(Estimate_Select_Data());
+
   @override
   void initState() {
-    estimate_id = Get.parameters['estimate_id'];
+    estimateId = Get.parameters['estimate_id'];
     isChattingRoom = true;
     print(token);
     getChat();
@@ -54,7 +58,7 @@ class _Chat_PageState extends State<Chat_Page> {
   }
 
   getChat() {
-    ChatData.getChat(estimate_id!).then((value) {
+    ChatData.getChat(estimateId!).then((value) {
       print(value);
       setState(() {
         chatting = value;
@@ -83,14 +87,14 @@ class _Chat_PageState extends State<Chat_Page> {
           centerTitle: true,
           elevation: 1.0,
           title: Text(
-            isPro == "Cus" ? com_name! : userId!.split("@")[0],
-            style: TextStyle(
+            isPro == "Cus" ? comName! : userId!.split("@")[0],
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16.0,
             ),
           ),
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: Colors.black,
             ),
@@ -99,7 +103,7 @@ class _Chat_PageState extends State<Chat_Page> {
             },
           ),
         ),
-        backgroundColor: Color(0xFFffffff),
+        backgroundColor: const Color(0xFFffffff),
         body: _isLoading
             ? Column(
                 children: [
@@ -138,9 +142,9 @@ class _Chat_PageState extends State<Chat_Page> {
                         )),
                   ),
                   Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.0),
                           border: Border.all(width: 1.0, color: Colors.grey),
@@ -170,7 +174,7 @@ class _Chat_PageState extends State<Chat_Page> {
                                     : 180 * math.pi / 180
                                 : 360 * math.pi / 180,
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 CupertinoIcons.eject_fill,
                               ),
                               onPressed: () async {
@@ -182,7 +186,7 @@ class _Chat_PageState extends State<Chat_Page> {
                                     print('print');
                                     Chat chat = Chat(
                                         id: 0,
-                                        estimateId: estimate_id!,
+                                        estimateId: estimateId!,
                                         estimate: "estimate",
                                         text: chatController.text,
                                         image: "",
@@ -194,9 +198,10 @@ class _Chat_PageState extends State<Chat_Page> {
                                       if (value.isNotEmpty) {
                                         chat.createAt = value[0];
 
-                                        estimate[chatIndex].createAt = value[0];
-                                        estimate[chatIndex].chat =
-                                            chatController.text;
+                                        estimateController.setCreateEstimate(
+                                            chatIndex, value[0]);
+                                        estimateController.setChatEstimate(
+                                            chatIndex, chatController.text);
 
                                         setState(() {
                                           chatting.insert(0, chat);
@@ -210,8 +215,6 @@ class _Chat_PageState extends State<Chat_Page> {
                                                       milliseconds: 300),
                                                   curve: Curves.easeInOut));
                                         });
-                                        print(estimate[chatIndex].createAt);
-                                        print(estimate[chatIndex].chat);
                                         final HttpsCallableResult result =
                                             await callable.call(
                                           <String, dynamic>{
@@ -220,6 +223,7 @@ class _Chat_PageState extends State<Chat_Page> {
                                             "body": "메세지가 도착했습니다",
                                           },
                                         );
+                                        print(result.data);
                                       }
                                     });
                                   } else {
@@ -237,7 +241,7 @@ class _Chat_PageState extends State<Chat_Page> {
                             ),
                           ),
                           prefixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.photo_on_rectangle,
                             ),
                             onPressed: () async {
@@ -245,7 +249,7 @@ class _Chat_PageState extends State<Chat_Page> {
                                   .pickImage(source: ImageSource.gallery);
                               Chat chat = Chat(
                                   id: 0,
-                                  estimateId: estimate_id!,
+                                  estimateId: estimateId!,
                                   estimate: "estimate",
                                   text: "",
                                   image: "true",
@@ -260,16 +264,18 @@ class _Chat_PageState extends State<Chat_Page> {
                                   chat.image = value[1];
                                   setState(() {
                                     chatting.insert(0, chat);
-                                    estimate[chatIndex].createAt = value[0];
-                                    estimate[chatIndex].chat = "";
+                                    estimateController.setCreateEstimate(
+                                        chatIndex, value[0]);
+                                    estimateController.setChatEstimate(
+                                        chatIndex, "");
 
                                     chatController.text = "";
                                     isChat = false;
                                     Timer(
-                                        Duration(milliseconds: 200),
+                                        const Duration(milliseconds: 200),
                                         () => scrollController.animateTo(0.0,
-                                            duration:
-                                                Duration(milliseconds: 300),
+                                            duration: const Duration(
+                                                milliseconds: 300),
                                             curve: Curves.easeInOut));
                                   });
                                   FocusScope.of(context).unfocus();
@@ -281,13 +287,14 @@ class _Chat_PageState extends State<Chat_Page> {
                                       "body": "메세지가 도착했습니다",
                                     },
                                   );
+                                  print(result.data);
                                 }
                               });
                             },
                           ),
                           contentPadding:
-                              EdgeInsets.only(left: 5, top: 5, bottom: 5),
-                          labelStyle: TextStyle(
+                              const EdgeInsets.only(left: 5, top: 5, bottom: 5),
+                          labelStyle: const TextStyle(
                             fontSize: 12,
                           ),
                           border: InputBorder.none,
@@ -295,7 +302,7 @@ class _Chat_PageState extends State<Chat_Page> {
                       ))
                 ],
               )
-            : Center(
+            : const Center(
                 child: CircularProgressIndicator(),
               ),
       ),
@@ -334,24 +341,24 @@ class MyChat extends StatelessWidget {
             children: [
               Text(
                 time,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Container(
                 constraints: BoxConstraints(maxWidth: Get.width / 2),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     border: Border.all(
                       width: 1,
-                      color: Color(0xFFcccccc),
+                      color: const Color(0xFFcccccc),
                     )),
                 child: Text(
                   text,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     height: 1.5,
                   ),
@@ -396,11 +403,11 @@ class ImageChat extends StatelessWidget {
             children: [
               Text(
                 time,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               InkWell(
                 onTap: () {
                   Get.to(DetailScreen(path: image));

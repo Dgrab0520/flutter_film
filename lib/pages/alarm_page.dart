@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_film/pages/profile_page.dart';
-import 'package:flutter_film/pages/request_page.dart';
 
+class AlarmPage extends StatefulWidget {
+  const AlarmPage({Key? key}) : super(key: key);
 
-class AlarmPage extends StatefulWidget{
   @override
   _AlarmPageState createState() => _AlarmPageState();
 }
 
-var _isChecked = true;
+bool _isPush = true;
+bool _isEmail = true;
+bool _isNews = true;
 
-class _AlarmPageState extends State<AlarmPage>{
+class _AlarmPageState extends State<AlarmPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,101 +19,101 @@ class _AlarmPageState extends State<AlarmPage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('마이페이지', style:
-        TextStyle(
-          color: Colors.black,
-          fontSize: 16.0,
-        ),
+        title: const Text(
+          '마이페이지',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+          ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black,),
-          onPressed: (){
+          icon: const Icon(
+            Icons.close,
+            color: Colors.black,
+          ),
+          onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      backgroundColor: Color(0xFFf0f0f0),
+      backgroundColor: const Color(0xFFf0f0f0),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Align(
             alignment: Alignment.center,
             child: Column(
-              children: <Widget> [
-                SizedBox(height:15),
+              children: <Widget>[
+                const SizedBox(height: 15),
                 Container(
-                  padding:const EdgeInsets.only(left:20,right: 20.0),
+                  padding: const EdgeInsets.only(left: 20, right: 20.0),
                   width: MediaQuery.of(context).size.width,
-                  height:70,
-                  color: Color(0xFFffffff),
+                  height: 70,
+                  color: const Color(0xFFffffff),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget> [
-                      Text(
+                    children: <Widget>[
+                      const Text(
                         '앱푸시',
                         style: TextStyle(
                           fontSize: 16,
                         ),
-
                       ),
                       Switch(
-                        value: _isChecked,
-                        onChanged: (value){
+                        value: _isPush,
+                        onChanged: (value) {
                           setState(() {
-                            _isChecked = value ;
+                            _isPush = value;
                           });
                         },
                       ),
                     ],
                   ),
                 ),
-
                 Container(
-                  padding:const EdgeInsets.only(left:20,right: 20.0),
+                  padding: const EdgeInsets.only(left: 20, right: 20.0),
                   width: MediaQuery.of(context).size.width,
-                  height:70,
-                  color: Color(0xFFffffff),
+                  height: 70,
+                  color: const Color(0xFFffffff),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget> [
-                      Text(
+                    children: <Widget>[
+                      const Text(
                         '이메일',
                         style: TextStyle(
                           fontSize: 16,
                         ),
-
                       ),
                       Switch(
-                        value: _isChecked,
-                        onChanged: (value){
+                        value: _isEmail,
+                        onChanged: (value) {
                           setState(() {
-                            _isChecked = value ;
+                            _isEmail = value;
                           });
                         },
                       ),
                     ],
                   ),
                 ),
-
                 Container(
-                  padding:const EdgeInsets.only(left:20,right: 20.0),
+                  padding: const EdgeInsets.only(left: 20, right: 20.0),
                   width: MediaQuery.of(context).size.width,
-                  height:70,
-                  color: Color(0xFFf0f0f0),
+                  height: 70,
+                  color: const Color(0xFFf0f0f0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget> [
+                    children: <Widget>[
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             '소식 알리미',
                             style: TextStyle(
-                              fontSize:16,
+                              fontSize: 16,
                             ),
                           ),
                           Text(
@@ -124,19 +125,16 @@ class _AlarmPageState extends State<AlarmPage>{
                         ],
                       ),
                       Switch(
-                        value: _isChecked,
-                        onChanged: (value){
+                        value: _isNews,
+                        onChanged: (value) {
                           setState(() {
-                            _isChecked = value ;
+                            _isNews = value;
                           });
                         },
                       ),
                     ],
                   ),
                 ),
-
-
-
               ],
             ),
           ),
