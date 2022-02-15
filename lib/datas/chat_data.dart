@@ -17,6 +17,7 @@ class ChatData {
   static const CHAT_LIST_ACTION = "CHAT_LIST";
   static const USER_CHAT_LIST_ACTION = "USER_CHAT_LIST";
   static const CUS_CHECK_ACTION = 'CUS_CHECK';
+  static const ESTIMATE_CHAT_ACTION = 'ESTIMATE_CHAT';
 
   // //전문가일때 채팅목록 불러오기
   // static Future<List<ChatRoom>> getChatList(
@@ -82,6 +83,28 @@ class ChatData {
       print(e);
       return [];
     }
+  }
+
+  //견적성 작성 후 채팅 입력
+  static Future<String> inserChatting(String estimate_id, String estimate_detail) async {
+    try{
+      var map = Map<String, dynamic>();
+      map['action'] = ESTIMATE_CHAT_ACTION;
+      map['estimate_id'] = estimate_id;
+      map['estimate_detail'] = estimate_detail;
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print('Pro Chat Response: ${response.body}');
+      if(200 == response.body){
+        return response.body;
+      }else{
+        return "error";
+      }
+    }catch(e){
+      return "error";
+    }
+
+
+
   }
   //
   // //고객 채팅 여부 확인

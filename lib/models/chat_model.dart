@@ -20,12 +20,12 @@ class Chat {
   factory Chat.fromJson(Map<String, dynamic> json) {
     return Chat(
       id: int.parse(json['id']),
-      estimateId: json['estimate_id'] as String,
+      estimateId: json['estimateId'] == null ? "" : json['estimateId'] as String,
       estimate: json['estimate'] == null ? "" : json['estimate'] as String,
-      text: json['text'] as String,
-      image: json['image'] as String,
-      isPro: json['isPro'] as String,
-      createAt: json['createAt'] as String,
+      text: json['text'] == null ? "" : json['text'] as String,
+      image: json['image'] == null ? "" : json['image'] as String,
+      isPro: json['isPro'] == null ? "" : json['isPro'] as String,
+      createAt: json['createAt'] == null ? "" : json['createAt'] as String,
     );
   }
 }

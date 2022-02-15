@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/chat_data.dart';
 import 'package:flutter_film/datas/register_estimate_data.dart';
 import 'package:flutter_film/datas/register_pointinfo_data.dart';
 import 'package:flutter_film/datas/select_estimate_data.dart';
@@ -20,6 +21,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page> {
   String? order_date;
   String? pro_id;
   String? order_id;
+  String? estimate_id;
   String? user_token;
   bool? _isLoading;
   bool? _isExsist;
@@ -37,6 +39,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page> {
     super.initState();
     _isLoading = false;
     _isExsist = false;
+    estimate_id = generateRandomString(12);
     count = 0;
     _selectEstimate = [];
     user_id = Get.parameters['user_id'];
@@ -118,15 +121,26 @@ class _SendEstimate_PageState extends State<SendEstimate_Page> {
   }
 
   _addEstimate() {
-    RegisterEstimate_Data.addEstimate(order_id!, generateRandomString(12),
+    RegisterEstimate_Data.addEstimate(order_id!, estimate_id!,
             user_id, pro_id, estimateController.text)
         .then((result) {
       if (result == 'success') {
         sendFCM_Dir();
+        _add_EstimateChat();
         _addPointInfo();
         print('addRegister success');
       } else {
         print('addRegister fail');
+      }
+    });
+  }
+
+  _add_EstimateChat(){
+    ChatData.inserChatting(estimate_id!, estimateController.text).then((value){
+      if(value == 'success'){
+        print('insert chat success');
+      }else{
+        print('insert chat fail');
       }
     });
   }

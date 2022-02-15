@@ -92,11 +92,11 @@ class _Chatlist_PageState extends State<Chatlist_Page> {
               itemCount: estimate.length,
               itemBuilder: (BuildContext context, int index) {
                 return ChatBox(
-                    estimate: estimate[index], index: index, isPro: isPro);
+                    estimate: estimate[index], estimate2: estimate[index].estimate2, index: index, isPro: isPro);
               },
             )
           : const Center(
-              child: CircularProgressIndicator(),
+              child: Text('채팅이 없습니다'),
             ),
     );
   }
@@ -108,9 +108,11 @@ class ChatBox extends StatefulWidget {
     required this.index,
     required this.isPro,
     required this.estimate,
+    required this.estimate2,
   }) : super(key: key);
   final int index;
   final String isPro;
+  final String estimate2;
   final Select_Estimate estimate;
 
   _ChatBoxState createState() => _ChatBoxState();
@@ -121,22 +123,21 @@ class _ChatBoxState extends State<ChatBox> {
 
   @override
   void initState() {
-    chat = widget.estimate.chat == "" ? "사진을 보냈습니다." : widget.estimate.chat;
     super.initState();
+    chat = widget.estimate.chat == "" ? "사진을 보냈습니다" : widget.estimate.estimate2 != "" ? "견적서가 도착했습니다" : widget.estimate.chat;
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        print(widget.estimate.user_id);
-        var result = await Get.toNamed(
-            '/chat/true?estimate_id=${widget.estimate.estimate_id}&&user_id=${widget.estimate.user_id}&&com_name=${widget.estimate.com_name}&&isPro=${widget.isPro}&&index=${widget.index}&&token=${widget.estimate.token}');
-        print(result);
         print(widget.estimate.chat);
+        var result = await Get.toNamed(
+            '/chat/true?ordeer_id=${widget.estimate.order_id}&&estimate_id=${widget.estimate.estimate_id}&&user_id=${widget.estimate.user_id}&&com_name=${widget.estimate.com_name}&&isPro=${widget.isPro}&&index=${widget.index}&&token=${widget.estimate.token}');
+        print(result);
+        print('aadwd ${widget.estimate.estimate2}');
         setState(() {
-          chat =
-              widget.estimate.chat == "" ? "사진을 보냈습니다." : widget.estimate.chat;
+          chat = widget.estimate.chat == "" ? "사진을 보냈습니다" : widget.estimate.chat;
         });
       },
       child: Container(

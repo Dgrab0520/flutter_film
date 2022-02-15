@@ -1,6 +1,7 @@
 class Select_Estimate {
   String order_id;
   String estimate_id;
+  String estimate2;
   String user_id;
   String pro_id;
   String com_name;
@@ -14,6 +15,7 @@ class Select_Estimate {
   Select_Estimate({
     required this.order_id,
     required this.estimate_id,
+    required this.estimate2,
     required this.user_id,
     required this.pro_id,
     required this.com_name,
@@ -30,6 +32,7 @@ class Select_Estimate {
       order_id: json['order_id'] as String,
       estimate_id:
           json['estimate_id'] == null ? "" : json['estimate_id'] as String,
+      estimate2: json['estimate'] == null ? "" : json['estimate'] as String,
       user_id: json['user_id'] as String,
       pro_id: json['pro_id'] as String,
       com_name: json['com_name'] == null ? "" : json['com_name'] as String,

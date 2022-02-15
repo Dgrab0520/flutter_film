@@ -24,6 +24,7 @@ class Chat_Page extends StatefulWidget {
 
 class _Chat_PageState extends State<Chat_Page> {
   String? estimate_id = Get.parameters['estimate_id'];
+  String? order_id = Get.parameters['order_id'];
   String? userId = Get.parameters['user_id'];
   String? com_name = Get.parameters['com_name'];
   String? isPro = Get.parameters['isPro'];
@@ -98,6 +99,9 @@ class _Chat_PageState extends State<Chat_Page> {
               Get.back();
             },
           ),
+          actions: [
+            TextButton(onPressed: (){}, child: Text('요청서 확인'))
+          ],
         ),
         backgroundColor: Color(0xFFffffff),
         body: _isLoading
@@ -126,13 +130,25 @@ class _Chat_PageState extends State<Chat_Page> {
                                       isPro: chatting[index].isPro == isPro
                                           ? true
                                           : false);
-                                } else {
+                                }
+                                else if(chatting[index].text != ""){
                                   return MyChat(
                                       text: chatting[index].text,
                                       createAt: chatting[index].createAt,
                                       isPro: chatting[index].isPro == isPro
                                           ? true
-                                          : false);
+                                          : false
+                                  );
+
+                                }
+                                else{
+                                  return EstimateChat(
+                                      estimate: chatting[index].estimate,
+                                      createAt: chatting[index].createAt,
+                                      isPro: chatting[index].isPro == isPro
+                                          ? true
+                                          : false
+                                  );
                                 }
                               }),
                         )),
@@ -421,4 +437,90 @@ class ImageChat extends StatelessWidget {
       ),
     );
   }
+}
+
+class EstimateChat extends StatelessWidget{
+  const EstimateChat({
+    Key? key,
+    required this.estimate,
+    required this.createAt,
+    required this.isPro,
+  }) : super(key: key);
+
+  final String estimate;
+  final String createAt;
+  final bool isPro;
+
+  @override
+  Widget build(BuildContext context) {
+    DateTime createAtTime = DateTime.parse(createAt);
+    String time = DateFormat("HH:mm").format(createAtTime);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Row(
+        textDirection: isPro ? ui.TextDirection.ltr : ui.TextDirection.rtl,
+        children: [
+          Expanded(
+            child: Container(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            textDirection: isPro ? ui.TextDirection.ltr : ui.TextDirection.rtl,
+            children: [
+              Text(
+                time,
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(width: 10),
+              InkWell(
+                onTap: () {
+                  print('Estimate_chat');
+                  // Get.to(DetailScreen(path: image));
+                },
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: Get.width / 2),
+                  //padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0, color: Colors.grey),
+                    color: Colors.white,
+                  ),
+                  child: Container(
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 30.0,
+                          width: Get.width,
+                          color: Color(0xFF191974),
+                          child: Center(
+                            child: Text("전문가 견적서", style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),),
+                          ),
+                        ),
+                        SizedBox(height: 5.0,),
+                        Center(
+                          child: Text("상세내용", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Text('$estimate'),
+                        ),
+                        SizedBox(height: 20.0,),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
 }
