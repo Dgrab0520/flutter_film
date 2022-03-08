@@ -6,8 +6,8 @@ class SearchIDPW{
 
   factory SearchIDPW.fromJson(Map<String, dynamic> json){
     return SearchIDPW(
-      user_id: json['user_id'] as String,
-      user_pw: json['user_pw'] as String,
+      user_id: json['user_id'] == null ? "" : json['user_id'] as String,
+      user_pw: json['user_pw'] == null ? "" : json['user_pw'] as String,
     );
   }
 }

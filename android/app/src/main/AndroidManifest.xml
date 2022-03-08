@@ -35,6 +35,7 @@
                <category android:name="android.intent.category.DEFAULT" />
                <category android:name="android.intent.category.BROWSABLE" />
                <data android:scheme="kakao9e7b120390d4b5e500c1979c182d62d5" android:host="oauth"/>
+               <data android:scheme="https" android:host="https://filmbanjang.page.link"/>
            </intent-filter>
        </activity>
 

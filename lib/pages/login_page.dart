@@ -272,122 +272,46 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         onPressed: () => _loginWithKakao(),
                                       )),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        FirebaseMessaging.instance
-                                            .getToken()
-                                            .then((value) =>
-                                                Area_Data.updateToken(
-                                                    "None", value!));
-                                        Get.offAllNamed(
-                                            '/main/true?type=customer');
-                                      },
-                                      child: Text("test")),
                                   SizedBox(
-                                    height: 150.0,
+                                    height: 250.0,
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 12.0),
-                                    height: 400.0,
-                                    width: Get.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Color(0xFFFFF2D4),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text(
-                                          '회사소개',
-                                          style: TextStyle(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black87),
-                                        ),
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text(
-                                          '"우리동네 필름반장에서는 고객과 전문가를 중개해주는 역할로 상호간 빠른 선택으로 도움이 되고자 합니다"',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFFff7866)),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        SizedBox(
-                                          width: Get.width,
-                                          height: 1.0,
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(
-                                              horizontal: 30.0,
-                                            ),
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text(
-                                          '단순한 중개가 아닌 신뢰를 바탕으로 책임시공 할 수 있는 전문가를 소개하는 플랫폼 중심에서 상호간 만족을 드리도록 노력하며 고객의 행복이 최우선이 되도록 서비스를 연구하고 있습니다.  ',
-                                          style: TextStyle(
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black54),
-                                        ),
-                                        SizedBox(
-                                          height: 50.0,
-                                        ),
-                                        Text(
-                                          '고객센터',
-                                          style: TextStyle(
-                                              fontSize: 18.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black87),
-                                        ),
-                                        SizedBox(
-                                          height: 15.0,
-                                        ),
-                                        Text(
-                                          '대표번호 : 02-2625-3868',
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black54),
-                                        ),
-                                        SizedBox(
-                                          height: 3.0,
-                                        ),
-                                        Text(
-                                          '이메일 : apt9785@naver.com',
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black54),
-                                        ),
-                                        SizedBox(
-                                          height: 3.0,
-                                        ),
-                                        Text(
-                                          '제휴문의 : gowjr0771@naver.com',
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.black54),
-                                        ),
-                                      ],
-                                    ),
+
+                                  Text(
+                                    '고객센터',
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87),
+                                  ),
+                                  SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  Text(
+                                    '대표번호 : 02-2625-3868',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black54),
+                                  ),
+                                  SizedBox(
+                                    height: 3.0,
+                                  ),
+                                  Text(
+                                    '이메일 : apt9785@naver.com',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black54),
+                                  ),
+                                  SizedBox(
+                                    height: 3.0,
+                                  ),
+                                  Text(
+                                    '제휴문의 : gowjr0771@naver.com',
+                                    style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black54),
                                   ),
                                   SizedBox(
                                     height: 50.0,

@@ -45,118 +45,120 @@ class _SearchPageState extends State<SearchPage>{
       ),
       backgroundColor: Colors.white,
       body: Container(
-        height: Get.height*0.9,
-        width: Get.width,
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 100.0,),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Text('ID찾기', style:
-                TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.deepOrange,
-                    fontWeight: FontWeight.bold
+          height: Get.height*0.9,
+          width: Get.width,
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 100.0,),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('ID찾기', style:
+                  TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.deepOrange,
+                      fontWeight: FontWeight.bold
+                  ),
+                  )
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                width: Get.width,
+                height: Get.height*0.4,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5, color: Colors.black54)
                 ),
-                )
-            ),
-            SizedBox(height: 10.0,),
-            Container(
-              width: Get.width,
-              height: Get.height*0.4,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 0.5, color: Colors.black54)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 10.0,),
-                  SizedBox(
-                    height: 50.0,
-                    width: Get.width*0.6,
-                    child: TextField(
-                      controller: nameController,
-                      cursorHeight: 20.0,
-                      style: TextStyle(
-                          fontSize: 13.0
-                      ),
-                      decoration: InputDecoration(
-                        fillColor: Color(0xFFF8F8F8),
-                        filled: true,
-                        labelText: '이름',
-                        labelStyle: TextStyle(fontSize: 11.0),
-                        border: OutlineInputBorder(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 10.0,),
+                    SizedBox(
+                      height: 50.0,
+                      width: Get.width*0.6,
+                      child: TextField(
+                        controller: nameController,
+                        cursorHeight: 20.0,
+                        style: TextStyle(
+                            fontSize: 13.0
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: Color(0xFFF8F8F8),
+                          filled: true,
+                          labelText: '이름',
+                          labelStyle: TextStyle(fontSize: 11.0),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  SizedBox(
-                    height: 50.0,
-                    width: Get.width*0.6,
-                    child: TextField(
-                      controller: phoneController,
-                      cursorHeight: 20.0,
-                      style: TextStyle(
-                          fontSize: 13.0
-                      ),
-                      decoration: InputDecoration(
-                        fillColor: Color(0xFFF8F8F8),
-                        filled: true,
-                        labelText: '휴대폰 번호를 입력하세요 (-제외)',
-                        labelStyle: TextStyle(fontSize: 11.0),
-                        border: OutlineInputBorder(),
+                    SizedBox(height: 20.0,),
+                    SizedBox(
+                      height: 50.0,
+                      width: Get.width*0.6,
+                      child: TextField(
+                        controller: phoneController,
+                        cursorHeight: 20.0,
+                        style: TextStyle(
+                            fontSize: 13.0
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: Color(0xFFF8F8F8),
+                          filled: true,
+                          labelText: '휴대폰 번호를 입력하세요 (-제외)',
+                          labelStyle: TextStyle(fontSize: 11.0),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: Get.width*0.3,
-                      height: 35.0,
-                      child: ElevatedButton(
-                        child: Text('본인인증', style:
-                        TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xFF398FE2),
-                            fontWeight: FontWeight.bold
-                        ),
-                          textAlign: TextAlign.center,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          side: BorderSide(
-                            width: 1.0, color: Color(0xFF398FE2),
+                    SizedBox(height: 20.0,),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: Get.width*0.3,
+                        height: 35.0,
+                        child: ElevatedButton(
+                          child: Text('본인인증', style:
+                          TextStyle(
+                              fontSize: 14.0,
+                              color: Color(0xFF398FE2),
+                              fontWeight: FontWeight.bold
                           ),
-                          elevation: 0.0,
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            side: BorderSide(
+                              width: 1.0, color: Color(0xFF398FE2),
+                            ),
+                            elevation: 0.0,
+                          ),
+                          onPressed: (){
+                            if(phoneController.text.isNotEmpty && nameController.text.isNotEmpty && phoneController.text.length == 11){
+                              Get.toNamed("/searchResult/ID?user_id='None'&&user_phone=${phoneController.text}");
+                              // Navigator.of(context).push(
+                              //     MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             Certification(
+                              //           id: 'None',
+                              //           phone: phoneController.text,
+                              //           name: nameController.text,
+                              //         )
+                              //     )
+                              // );
+                            }else{
+                              Get.snackbar("Error", "이름 또는 휴대폰 번호를 확인해주세요");
+                            }
+                          },
                         ),
-                        onPressed: (){
-                          if(phoneController.text.isNotEmpty && nameController.text.isNotEmpty && phoneController.text.length == 11){
-                            Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => Certification(
-                                      id: 'None',
-                                      phone: phoneController.text,
-                                      name: nameController.text,
-                                    )
-                                )
-                            );
-                          }else{
-                            Get.snackbar("Error", "이름 또는 휴대폰 번호를 확인해주세요");
-                          }
-                        },
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 50.0,),
-          ],
-        )
+              SizedBox(height: 50.0,),
+            ],
+          )
       ),
     );
   }

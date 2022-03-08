@@ -5,6 +5,8 @@ class Chat {
   String image;
   String text;
   String isPro;
+  String pro_check;
+  String user_check;
   String createAt;
 
   Chat({
@@ -14,6 +16,8 @@ class Chat {
     required this.text,
     required this.image,
     required this.isPro,
+    required this.pro_check,
+    required this.user_check,
     required this.createAt,
   });
 
@@ -25,6 +29,8 @@ class Chat {
       text: json['text'] == null ? "" : json['text'] as String,
       image: json['image'] == null ? "" : json['image'] as String,
       isPro: json['isPro'] == null ? "" : json['isPro'] as String,
+      pro_check: json['pro_check'] == null ? "" : json['pro_check'] as String,
+      user_check: json['user_check'] == null ? "" : json['user_check'] as String,
       createAt: json['createAt'] == null ? "" : json['createAt'] as String,
     );
   }

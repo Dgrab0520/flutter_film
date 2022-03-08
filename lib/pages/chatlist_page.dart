@@ -2,177 +2,175 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/select_estimate_data.dart';
 import 'package:flutter_film/main.dart';
-import 'package:flutter_film/models/select_estimate_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class Chatlist_Page extends StatefulWidget {
-  @override
-  _Chatlist_PageState createState() => _Chatlist_PageState();
-}
-
-class _Chatlist_PageState extends State<Chatlist_Page> {
-  String? pro_id = Get.parameters['pro_id'];
-  String? user_id = Get.parameters['user_id'];
-  bool _isLoading = true;
-  String isPro = "Cus";
+class ChatListPage extends StatelessWidget {
+  ChatListPage({Key? key}) : super(key: key);
 
   getEstimate() {
-    Estimate_Select_Data.getProEstimate(pro_id!).then((value) {
-      print(value);
-      setState(() {
-        estimate = value;
-        if (value.isEmpty) {
-          _isLoading = false;
-        } else {
-          _isLoading = true;
-        }
-      });
-    });
+    userId == null
+        ? estimateController.getProEstimate(proId!)
+        : estimateController.getUserEstimate(userId!);
   }
 
-  getUserEstimate() {
-    Estimate_Select_Data.getUserEstimate(user_id!).then((value) {
-      print(value);
-      setState(() {
-        estimate = value;
-        if (value.isEmpty) {
-          _isLoading = false;
-        } else {
-          _isLoading = true;
-        }
-      });
-    });
-  }
+  final String? proId = Get.parameters['pro_id'];
+  final String? userId = Get.parameters['user_id'];
 
-  @override
-  void initState() {
-    isChattingRoom = true;
-
-    FirebaseMessaging.onMessage.listen((message) {
-      setState(() {
-        _isLoading = false;
-      });
-      user_id == null ? getEstimate() : getUserEstimate();
-      isPro = user_id == null ? "Pro" : "Cus";
-    });
-    user_id == null ? getEstimate() : getUserEstimate();
-    isPro = user_id == null ? "Pro" : "Cus";
-    super.initState();
-  }
-
+  final estimateController = Get.put(Estimate_Select_Data());
   @override
   Widget build(BuildContext context) {
+    isChattingRoom = true;
+    String isPro = userId == null ? "Pro" : "Cus";
+
+    FirebaseMessaging.onMessage.listen((message) {
+      getEstimate();
+    });
+    getEstimate();
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0.0,
-        title: Text(
-          '채팅',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16.0,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.close,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
-      backgroundColor: Color(0xFFf0f0f0),
-      body: _isLoading
-          ? ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: estimate.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ChatBox(
-                    estimate: estimate[index], estimate2: estimate[index].estimate2, index: index, isPro: isPro);
-              },
-            )
-          : const Center(
-              child: Text('채팅이 없습니다'),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0.0,
+          title: const Text(
+            '채팅',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16.0,
             ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+        ),
+
+
+        backgroundColor: const Color(0xFFf0f0f0),
+        body: Obx(
+          () => estimateController.isLoading
+              ? estimateController.estimate.isNotEmpty
+                  ? ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: estimateController.estimate.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ChatBox(index: index, isPro: isPro);
+                      },
+                    )
+                  : const Center(
+                      child: Text("진행중인 채팅이 없습니다"),
+                    )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+        )
     );
+
   }
 }
 
-class ChatBox extends StatefulWidget {
+class ChatBox extends StatelessWidget {
   const ChatBox({
     Key? key,
     required this.index,
     required this.isPro,
-    required this.estimate,
-    required this.estimate2,
   }) : super(key: key);
   final int index;
   final String isPro;
-  final String estimate2;
-  final Select_Estimate estimate;
 
-  _ChatBoxState createState() => _ChatBoxState();
-}
-
-class _ChatBoxState extends State<ChatBox> {
-  String chat = "";
-
-  @override
-  void initState() {
-    super.initState();
-    chat = widget.estimate.chat == "" ? "사진을 보냈습니다" : widget.estimate.estimate2 != "" ? "견적서가 도착했습니다" : widget.estimate.chat;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final estimateController = Get.put(Estimate_Select_Data());
     return InkWell(
-      onTap: () async {
-        print(widget.estimate.chat);
-        var result = await Get.toNamed(
-            '/chat/true?ordeer_id=${widget.estimate.order_id}&&estimate_id=${widget.estimate.estimate_id}&&user_id=${widget.estimate.user_id}&&com_name=${widget.estimate.com_name}&&isPro=${widget.isPro}&&index=${widget.index}&&token=${widget.estimate.token}');
-        print(result);
-        print('aadwd ${widget.estimate.estimate2}');
-        setState(() {
-          chat = widget.estimate.chat == "" ? "사진을 보냈습니다" : widget.estimate.chat;
-        });
+      onTap: () {
+        Get.toNamed(
+            '/chat/true?estimate_id=${estimateController.estimate[index].estimate_id}&&order_id=${estimateController.estimate[index].order_id}&&user_id=${estimateController.estimate[index].user_id}&&pro_id=${estimateController.estimate[index].pro_id}&&com_name=${estimateController.estimate[index].com_name}&&isPro=$isPro&&index=$index&&token=${estimateController.estimate[index].token}');
       },
       child: Container(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         width: Get.width,
         height: 100.0,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             border: Border(bottom: BorderSide(color: Colors.grey, width: 0.3))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              widget.isPro == "Cus"
-                  ? widget.estimate.com_name
-                  : widget.estimate.user_id,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+
+            Row(
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Text(
+                    isPro == "Cus"
+                        ? estimateController.estimate[index].com_name
+                        : estimateController.estimate[index].user_id,
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: isPro == 'Cus'
+                          ? estimateController.estimate[index].user_check == '1'
+                            ? Container(
+                                width: 25.0,
+                                height: 25.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  border: Border.all(width: 1.0, color: Colors.deepOrange),
+                                ),
+                                child:  Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
+                              )
+                            : Container()
+                          : estimateController.estimate[index].pro_check == '1'
+                            ? Container(
+                                width: 25.0,
+                                height: 25.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  border: Border.all(width: 1.0, color: Colors.deepOrange),
+                                ),
+                                child: Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
+                              )
+                            : Container(),
+
+                )
+              ],
             ),
+
             Flexible(
-              child: Text(
-                chat,
-                style: const TextStyle(color: Colors.black45),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+              child: Obx(
+                    () => Text(
+                  estimateController.estimate[index].chat == ""
+                      ? "사진을 보냈습니다."
+                      : estimateController.estimate[index].chat,
+                  style: const TextStyle(color: Colors.black45),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
               ),
             ),
+
             Align(
               alignment: Alignment.bottomRight,
-              child: Text(
-                DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(
-                    widget.estimate.chat == " "
-                        ? widget.estimate.estimate_date
-                        : widget.estimate.createAt)),
-                style: const TextStyle(fontSize: 12, color: Colors.black45),
+              child: Obx(
+                    () => Text(
+                  DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(
+                      estimateController.estimate[index].chat == " "
+                          ? estimateController.estimate[index].estimate_date
+                          : estimateController.estimate[index].createAt)),
+                  style: const TextStyle(fontSize: 12, color: Colors.black45),
+                ),
               ),
             ),
           ],

@@ -10,9 +10,10 @@ class SearchResultPage extends StatefulWidget{
 }
 
 class _SearchResultPageState extends State<SearchResultPage>{
-  List<SearchIDPW>? _searchID;
-  List<SearchIDPW>? _searchPW;
-  bool? _isLoading;
+  List<SearchIDPW>? _searchID = [];
+  List<SearchIDPW>? _searchPW = [];
+  bool _isLoading = false;
+  bool _isLoading2 = false;
   String? searchType;
   String? user_ph;
   String? user_id;
@@ -21,8 +22,7 @@ class _SearchResultPageState extends State<SearchResultPage>{
   void initState(){
     super.initState();
     _isLoading = false;
-    _searchID = [];
-    _searchPW = [];
+
     searchType = Get.parameters['param'];
     user_ph = Get.parameters['user_phone'];
     user_id = Get.parameters['user_id'];
@@ -35,10 +35,13 @@ class _SearchResultPageState extends State<SearchResultPage>{
       setState(() {
         _searchID = searchID;
       });
+      print('user id1 : ${_searchID!}');
       if(searchID.length == 0){
         _isLoading = false;
+        print('user id12 : ${_searchID!}');
       }else{
         _isLoading = true;
+        print('user id13 : ${_searchID!}');
       }
     });
   }
@@ -49,9 +52,9 @@ class _SearchResultPageState extends State<SearchResultPage>{
         _searchPW = searchPW;
       });
       if(searchPW.length == 0){
-        _isLoading = false;
+        _isLoading2 = false;
       }else{
-        _isLoading = true;
+        _isLoading2 = true;
       }
     });
   }
@@ -60,65 +63,65 @@ class _SearchResultPageState extends State<SearchResultPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black,),
-          onPressed: (){
-            Navigator.pop(context);
-          },
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0.0,
+          leading: IconButton(
+            icon: Icon(Icons.close, color: Colors.black,),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(height: Get.height*0.2,),
+        body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: Get.height*0.2,),
 
-            Container(
-              height: Get.height*0.7,
-              width: Get.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('전문가님이 찾으시는 $searchType는 ', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400)),
-                  searchType == "ID"
-                      ?
-                  Container(
-                      height: Get.height*0.4,
-                      width: Get.width*0.8,
-                      child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: _searchID!.length,
-                        itemBuilder: (BuildContext context, int index){
-                          return Container(child: Text('${_searchID![index].user_id}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),);
-                        }
-                      ),
-                  )
-                      :
-                  Container(
-                      height: Get.height*0.4,
-                      width: Get.width*0.8,
-                      child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          itemCount: _searchPW!.length,
-                          itemBuilder: (BuildContext context, int index){
-                            return Container(child: Text('${_searchPW![index].user_pw}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),);
-                          }
+                Container(
+                  height: Get.height*0.7,
+                  width: Get.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text('전문가님이 찾으시는 $searchType는 ', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400)),
+                      searchType == "ID"
+                          ?
+                      Container(
+                        height: Get.height*0.4,
+                        width: Get.width*0.8,
+                        child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: _searchID!.length,
+                            itemBuilder: (BuildContext context, int index){
+                              return Container(child: Text('${_searchID![index].user_id}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold)),);
+                            }
+                        ),
                       )
+                          :
+                      Container(
+                          height: Get.height*0.4,
+                          width: Get.width*0.8,
+                          child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: _searchPW!.length,
+                              itemBuilder: (BuildContext context, int index){
+                                return Container(child: Text('${_searchPW![index].user_pw}', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),),);
+                              }
+                          )
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            )
         )
-      )
     );
   }
 }

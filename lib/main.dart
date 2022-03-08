@@ -1,4 +1,10 @@
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
+
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/ad_page.dart';
@@ -64,7 +70,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashPage(),
+        home: const SplashPage(),
         getPages: [
           GetPage(name: '/main/:param', page: () => MainPage()),
           //MainPage
@@ -117,12 +123,16 @@ class MyApp extends StatelessWidget {
             page: () => SendEstimate_Page(),
           ),
           GetPage(
+            name: '/FilmChat/:param',
+            page: () => ChatListPage(),
+          ),
+          GetPage(
             name: '/chatlist/:param',
-            page: () => Chatlist_Page(),
+            page: () => ChatListPage(),
           ),
           GetPage(
             name: '/chat/:param',
-            page: () => Chat_Page(),
+            page: () => ChatPage(),
           ),
           GetPage(
             name: '/deposit/:par`am',
@@ -211,6 +221,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    // initDynamicLinks();
     FirebaseMessaging.instance.getInitialMessage();
 
     FirebaseMessaging.onMessage.listen((message) {
@@ -223,15 +234,15 @@ class _SplashPageState extends State<SplashPage> {
           Get.defaultDialog(
               title: title!,
               content: Text(body!),
-              titleStyle: TextStyle(
+              titleStyle: const TextStyle(
                   fontSize: 15.0,
                   color: Colors.deepOrange,
                   fontWeight: FontWeight.bold),
-              middleTextStyle: TextStyle(fontSize: 11.0));
+              middleTextStyle: const TextStyle(fontSize: 11.0));
         } else {
           if (!isChattingRoom) {
             Get.snackbar("채팅", "메세지가 도착했습니다",
-                duration: Duration(milliseconds: 1200));
+                duration: const Duration(milliseconds: 1200));
           }
         }
       }
@@ -243,7 +254,68 @@ class _SplashPageState extends State<SplashPage> {
     });
 
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
   }
+
+
+
+  // void initDynamicLinks() async {
+  //   FirebaseDynamicLinks.instance.onLink(
+  //       onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+  //         final Uri? deepLink = dynamicLink?.link;
+  //
+  //         print('deeplink is : $deepLink');
+  //         if (deepLink != null) {
+  //           // 앱이 resume 상태일 때(백그라운드에 있을 때)
+  //           _movePage(deepLinkPath: deepLink.path);
+  //         }
+  //       }, onError: (OnLinkErrorException e) async {
+  //     print('onLinkError');
+  //     print(e.message);
+  //   });
+  //
+  //   final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+  //   final Uri? deepLink = data?.link;
+  //
+  //
+  //   if (deepLink != null) {
+  //     // dynamic link로 꺼진 앱을 킬 때
+  //     _movePage(deepLinkPath: deepLink.path);
+  //   } else {
+  //     // 일반적으로 App을 켰을 때
+  //     _movePage();
+  //   }
+  // }
+  //
+  //
+  // void _movePage({String? deepLinkPath}) async {
+  //   if (deepLinkPath == null) {
+  //     print('deepLinkPath : $deepLinkPath');
+  //     //이건 스플래쉬 화면이 너무 빨리 넘어가서 앱을 다이나믹링크가 아닌 일반적으로 킬 때, sleep 으로 스플래시 화면이 더 오래 띄워지게 해놨당
+  //     // sleep(const Duration(seconds: 2));
+  //     // Get.offAll(() => MainPage());
+  //   } else {
+  //     print('deepLinkPath : $deepLinkPath');
+  //     //여기서 routes 또는 getPages에서 설정한 path의 화면으로 넘어간다
+  //     // Get.offAllNamed(deepLinkPath);
+  //   }
+  //   // if (user.registeredAt == null) {
+  //   //   Get.offAll(() => Login());
+  //   // } else {
+  //   //   if (deepLinkPath == null) {
+  //   //     //이건 스플래쉬 화면이 너무 빨리 넘어가서 앱을 다이나믹링크가 아닌 일반적으로 킬 때, sleep 으로 스플래시 화면이 더 오래 띄워지게 해놨당
+  //   //     sleep(const Duration(seconds: 2));
+  //   //     Get.offAll(() => MainPage());
+  //   //   } else {
+  //   //     //여기서 routes 또는 getPages에서 설정한 path의 화면으로 넘어간다
+  //   //     Get.offAllNamed(deepLinkPath);
+  //   //   }
+  //   }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -251,11 +323,14 @@ class _SplashPageState extends State<SplashPage> {
         backgroundColor: Colors.white,
         body: SplashScreenView(
           navigateRoute: MainPage(),
-          duration: 3000,
+          duration: 2000,
           imageSize: 70,
           imageSrc: 'assets/images/logo.gif',
           text: '인테리어 필름 시공전문',
           backgroundColor: Colors.white,
-        ));
+        )
+    );
   }
 }
+
+

@@ -6,18 +6,22 @@ import 'package:flutter_film/models/chat_model.dart';
 import 'package:http/http.dart' as http;
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-Random _rnd = Random();
+final Random _rnd = Random();
 String getRandomString() => String.fromCharCodes(Iterable.generate(
     10, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 class ChatData {
   static const ROOT = "http://gowjr0771.cafe24.com/film_chat.php";
+  static const root = "http://gowjr0771.cafe24.com/film_chat.php";
   static const LIST_ACTION = "LIST";
   static const WRITE_ACTION = "WRITE";
   static const CHAT_LIST_ACTION = "CHAT_LIST";
   static const USER_CHAT_LIST_ACTION = "USER_CHAT_LIST";
   static const CUS_CHECK_ACTION = 'CUS_CHECK';
   static const ESTIMATE_CHAT_ACTION = 'ESTIMATE_CHAT';
+  static const UPDATE_CHECK_ACTION = "UPDATE_CHECK";
+
+
 
   // //전문가일때 채팅목록 불러오기
   // static Future<List<ChatRoom>> getChatList(
@@ -63,14 +67,16 @@ class ChatData {
   //   }
   // }
   //
+
+
   //채팅 불러오기
   static Future<List<Chat>> getChat(String estimateId) async {
     print("estimateId : $estimateId");
     try {
       var map = <String, dynamic>{};
-      map['action'] = LIST_ACTION;
+      map['action'] = "LIST";
       map['estimateId'] = estimateId;
-      final response = await http.post(Uri.parse(ROOT), body: map);
+      final response = await http.post(Uri.parse(root), body: map);
       print('Chat Response : ${response.body}');
 
       if (response.statusCode == 200) {
@@ -102,10 +108,29 @@ class ChatData {
     }catch(e){
       return "error";
     }
-
-
-
   }
+
+  //채팅 상태 변경
+  static Future<String> updateCheck(String estimate_id, String condition, String _isPro) async {
+    try{
+      var map = Map<String, dynamic>();
+      map['action'] = UPDATE_CHECK_ACTION;
+      map['estimate_id'] = estimate_id;
+      map['condition'] = condition;
+
+      map['_isPro'] = _isPro;
+      final response = await http.post(Uri.parse(ROOT), body: map);
+      print('Update Check Response : ${response.body}');
+      if(200 == response.body){
+        return response.body;
+      }else{
+        return "error";
+      }
+    }catch(e){
+      return "error";
+    }
+  }
+
   //
   // //고객 채팅 여부 확인
   // static Future<List<Chat>> check_Cus(String estimateId) async {
@@ -134,18 +159,25 @@ class ChatData {
         "  " +
         chat.isPro.toString() +
         "  " +
+        chat.pro_check.toString() +
+        "  " +
+        chat.user_check.toString() +
+        "  " +
         chat.id.toString() +
         "  " +
         chat.estimateId.toString());
     String imageName = getRandomString() + ".gif";
     try {
-      var url = Uri.parse(ROOT);
+      var url = Uri.parse(root);
       var request = http.MultipartRequest('POST', url);
-      request.fields['action'] = WRITE_ACTION;
+      request.fields['action'] = "WRITE";
       request.fields['estimateId'] = chat.estimateId.toString();
       request.fields['text'] = chat.text;
       request.fields['image'] = chat.image == "true" ? imageName : "";
       request.fields['isPro'] = chat.isPro.toString();
+      request.fields['pro_check'] = chat.pro_check.toString();
+      request.fields['user_check'] = chat.user_check.toString();
+
       if (file != null) {
         request.files
             .add(await http.MultipartFile.fromPath("chatImage", file.path));

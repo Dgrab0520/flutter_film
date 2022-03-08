@@ -115,68 +115,68 @@ class _CustomerMyPageState extends State<CustomerMyPage>{
                 ),
               ),
               SizedBox(height:15),
-              Container(
-                padding:const EdgeInsets.only(left:20,right: 20.0),
-                width: Get.width,
-                height:50,
-                color: Color(0xFFffffff),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget> [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '거래내역',
-                          style: TextStyle(
-                            fontSize:16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: (){
-                  Get.toNamed('/customerList/true?id=$user_id');
-                  print('success');
-                },
-
-                child: Container(
-                  padding:const EdgeInsets.only(left:20,right: 20.0),
-                  width: Get.width,
-                  height:50,
-                  color: Color(0xFFffffff),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget> [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.list_alt_outlined, color: Color(0xFF707070), size: 20.0,),
-                          SizedBox(width:10),
-                          Text(
-                            '받은 견적서', style:
-                            TextStyle(
-                              fontSize:15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.arrow_forward_ios, color: Color(0xFF707070), size: 20.0,),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding:const EdgeInsets.only(left:20,right: 20.0),
+              //   width: Get.width,
+              //   height:50,
+              //   color: Color(0xFFffffff),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: <Widget> [
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Text(
+              //             '거래내역',
+              //             style: TextStyle(
+              //               fontSize:16,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // GestureDetector(
+              //   onTap: (){
+              //     Get.toNamed('/customerList/true?id=$user_id');
+              //     print('success');
+              //   },
+              //
+              //   child: Container(
+              //     padding:const EdgeInsets.only(left:20,right: 20.0),
+              //     width: Get.width,
+              //     height:50,
+              //     color: Color(0xFFffffff),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       children: <Widget> [
+              //         Row(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Icon(Icons.list_alt_outlined, color: Color(0xFF707070), size: 20.0,),
+              //             SizedBox(width:10),
+              //             Text(
+              //               '받은 견적서', style:
+              //               TextStyle(
+              //                 fontSize:15,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //         Row(
+              //           children: [
+              //             Icon(Icons.arrow_forward_ios, color: Color(0xFF707070), size: 20.0,),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Container(
                 padding:const EdgeInsets.only(left:20,right: 20.0),
                 width: Get.width,
