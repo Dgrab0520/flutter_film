@@ -26,9 +26,6 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-
-
-
 class _ChatPageState extends State<ChatPage> {
   String? estimateId = Get.parameters['estimate_id'];
 
@@ -44,14 +41,11 @@ class _ChatPageState extends State<ChatPage> {
   String? token = Get.parameters['token'];
   String condition = '';
 
-
   final bool _isLoading = true;
   TextEditingController chatController = TextEditingController();
   ScrollController scrollController = ScrollController();
 
   FocusNode focusNode = FocusNode();
-
-
 
   HttpsCallable callable = FirebaseFunctions.instance.httpsCallable('sendFCM',
       options: HttpsCallableOptions(timeout: const Duration(seconds: 5)));
@@ -61,16 +55,13 @@ class _ChatPageState extends State<ChatPage> {
     String title = "[필름반장] 새로운 채팅이 도착했습니다";
     String body = "새로운 채팅을 확인해주세요";
 
-
     final HttpsCallableResult result = await callable.call(
       <String, dynamic>{
         "token": token,
         "title": title,
         "body": body,
       },
-    ).whenComplete(() =>
-        print("$token 에게 새로운 채팅 전달")
-    );
+    ).whenComplete(() => print("$token 에게 새로운 채팅 전달"));
     print(result.data);
   }
 
@@ -80,11 +71,11 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     print('token : $token');
     estimateId = Get.parameters['estimate_id'];
-    if(isPro == 'Cus'){
+    if (isPro == 'Cus') {
       setState(() {
         condition = "user_check = '2'";
       });
-    }else{
+    } else {
       setState(() {
         condition = "pro_check = '2'";
       });
@@ -109,19 +100,19 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  getOrder(){
-    Order_Select_Data.getOrder(order_id!).then((value){
+  getOrder() {
+    Order_Select_Data.getOrder(order_id!).then((value) {
       setState(() {
         order = value;
       });
     });
   }
 
-  checkMessage(){
-    ChatData.updateCheck(estimateId!, condition, isPro!).then((value){
-      if(value == 'success'){
+  checkMessage() {
+    ChatData.updateCheck(estimateId!, condition, isPro!).then((value) {
+      if (value == 'success') {
         print('Update Check Success');
-      }else {
+      } else {
         print('Update Check Fail');
       }
     });
@@ -167,119 +158,120 @@ class _ChatPageState extends State<ChatPage> {
             },
           ),
           actions: [
-            TextButton(onPressed: (){
-              Get.defaultDialog(
-                title: "요청서 확인",
-                titleStyle: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500
-                ),
-                content: Container(
-                  width: Get.width,
-                  height: 200.0,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Container(
-                            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-                            height: 200.0,
-                            width: Get.width,
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.start,
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  '서비스 희망 일자 : ${order[0].order_date}',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      '서비스 지역 : ${order[0].service_area}',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                    SizedBox(
-                                      width: 20.0,
-                                    ),
-                                    Text(
-                                      '서비스 크기 : ${order[0].service_size}',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Text(
-                                  '서비스 내용',
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Colors.redAccent),
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                Container(
+            TextButton(
+                onPressed: () {
+                  Get.defaultDialog(
+                      title: "요청서 확인",
+                      titleStyle: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w500),
+                      content: Container(
+                        width: Get.width,
+                        height: 200.0,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 5.0),
+                                      horizontal: 5.0, vertical: 5.0),
+                                  height: 200.0,
                                   width: Get.width,
-                                  height: 70.0,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.circular(10.0),
-                                      border: Border.all(
-                                          width: 0.4,
-                                          color: Colors.redAccent)),
-                                  child: Text(
-                                    '${order[0].service_detail}',
-                                    style: TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black87),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Center(
-                                  child: InkWell(
-                                    onTap: (){Get.back();},
-                                    child: Container(
-                                      height: 30.0,
-                                      width: 100.0,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5.0),
-                                          color: Colors.blue
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        '서비스 희망 일자 : ${order[0].order_date}',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w300),
                                       ),
-                                      child: Center(
-                                        child: Text('확인',
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                            '서비스 지역 : ${order[0].service_area}',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          SizedBox(
+                                            width: 20.0,
+                                          ),
+                                          Text(
+                                            '서비스 크기 : ${order[0].service_size}',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Text(
+                                        '서비스 내용',
+                                        style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.redAccent),
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 5.0),
+                                        width: Get.width,
+                                        height: 70.0,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            border: Border.all(
+                                                width: 0.4,
+                                                color: Colors.redAccent)),
+                                        child: Text(
+                                          '${order[0].service_detail}',
                                           style: TextStyle(
                                               fontSize: 14.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600
-                                          ),
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black87),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Center(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.back();
+                                          },
+                                          child: Container(
+                                            height: 30.0,
+                                            width: 100.0,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                                color: Colors.blue),
+                                            child: Center(
+                                              child: Text(
+                                                '확인',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                )
-              );
-            }, child: Text('요청서 확인'))
+                      ));
+                },
+                child: Text('요청서 확인'))
           ],
         ),
         backgroundColor: const Color(0xFFffffff),
@@ -304,29 +296,25 @@ class _ChatPageState extends State<ChatPage> {
                                 if (chatting[index].image != "") {
                                   return ImageChat(
                                       image:
-                                          "http://gowjr0771.cafe24.com/chat_image/${chatting[index].image}",
+                                          "http://211.110.1.58/chat_image/${chatting[index].image}",
                                       createAt: chatting[index].createAt,
                                       isPro: chatting[index].isPro == isPro
                                           ? true
                                           : false);
-                                }
-                                else if(chatting[index].text != ""){
+                                } else if (chatting[index].text != "") {
                                   return MyChat(
                                       text: chatting[index].text,
                                       createAt: chatting[index].createAt,
                                       isPro: chatting[index].isPro == isPro
                                           ? true
-                                          : false
-                                  );
-
-                                }
-                                else{
+                                          : false);
+                                } else {
                                   return EstimateChat(
-                                      estimate: chatting[index].estimate,
-                                      createAt: chatting[index].createAt,
-                                      isPro: chatting[index].isPro == isPro
-                                          ? true
-                                          : false,
+                                    estimate: chatting[index].estimate,
+                                    createAt: chatting[index].createAt,
+                                    isPro: chatting[index].isPro == isPro
+                                        ? true
+                                        : false,
                                     service_date: order[0].order_date,
                                     service_area: order[0].service_area,
                                     service_size: order[0].service_size,
@@ -455,7 +443,8 @@ class _ChatPageState extends State<ChatPage> {
                                   user_check: isPro == "Cus" ? '2' : '1',
                                   createAt: "");
 
-                              ChatData.putChat(chat, file: File(file!.path)).then((value) async {
+                              ChatData.putChat(chat, file: File(file!.path))
+                                  .then((value) async {
                                 print(value);
                                 if (value.isNotEmpty) {
                                   chat.createAt = value[0];
@@ -629,7 +618,8 @@ class ImageChat extends StatelessWidget {
     );
   }
 }
-class EstimateChat extends StatelessWidget{
+
+class EstimateChat extends StatelessWidget {
   const EstimateChat({
     Key? key,
     required this.estimate,
@@ -679,7 +669,7 @@ class EstimateChat extends StatelessWidget{
                   // Get.to(DetailScreen(path: image));
                 },
                 child: Container(
-                  constraints: BoxConstraints(maxWidth: Get.width*0.6),
+                  constraints: BoxConstraints(maxWidth: Get.width * 0.6),
                   //padding: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     border: Border.all(width: 0.3, color: Colors.grey),
@@ -689,40 +679,61 @@ class EstimateChat extends StatelessWidget{
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Container(
                         height: 30.0,
                         width: Get.width,
                         color: Color(0xFFCECECE),
                         child: Center(
-                          child: Text("전문가 견적서", style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.black87),),
+                          child: Text(
+                            "전문가 견적서",
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87),
+                          ),
                         ),
                       ),
-                      SizedBox(height: 5.0,),
+                      SizedBox(
+                        height: 5.0,
+                      ),
                       Container(
                         child: Column(
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(width: 15.0,),
-                                Icon(CupertinoIcons.paperplane_fill, size: 17.0,),
-                                Text("상세견적", style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),),
+                                SizedBox(
+                                  width: 15.0,
+                                ),
+                                Icon(
+                                  CupertinoIcons.paperplane_fill,
+                                  size: 17.0,
+                                ),
+                                Text(
+                                  "상세견적",
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ],
                             ),
-                            SizedBox(height: 5.0,),
+                            SizedBox(
+                              height: 5.0,
+                            ),
                             Container(
                               width: Get.width,
                               color: Color(0xFFE0E0FF),
                               margin: EdgeInsets.symmetric(horizontal: 10.0),
-                              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 10.0),
                               child: Text('$estimate'),
                             ),
                           ],
                         ),
                       ),
-
-                      SizedBox(height: 15.0,),
+                      SizedBox(
+                        height: 15.0,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                         child: Divider(
@@ -731,8 +742,9 @@ class EstimateChat extends StatelessWidget{
                           color: Colors.grey,
                         ),
                       ),
-
-                      SizedBox(height: 10.0,),
+                      SizedBox(
+                        height: 10.0,
+                      ),
                       Container(
                         padding: EdgeInsets.only(
                             left: 10.0, right: 10.0, bottom: 5.0),
@@ -742,8 +754,7 @@ class EstimateChat extends StatelessWidget{
                             Text(
                               '서비스 희망 일자 : $service_date',
                               style: TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w300),
+                                  fontSize: 12.0, fontWeight: FontWeight.w300),
                               softWrap: false,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -768,15 +779,12 @@ class EstimateChat extends StatelessWidget{
                                         fontWeight: FontWeight.w300),
                                   ),
                                 ),
-
-
                               ],
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
                             Container(
-
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10.0, vertical: 5.0),
                               width: Get.width,
@@ -803,5 +811,4 @@ class EstimateChat extends StatelessWidget{
       ),
     );
   }
-
 }

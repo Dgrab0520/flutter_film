@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/banner_model.dart';
 
-
-class Banner_Data{
-  static const ROOT = 'http://gowjr0771.cafe24.com/film_banner.php';
+class Banner_Data {
+  static const ROOT = 'http://211.110.1.58/film_banner.php';
   static const _GET_BANNER_ACTION = 'GET_BANNER';
 
   static Future<List<Bbanner>> getBanner() async {
@@ -23,7 +24,8 @@ class Banner_Data{
       return <Bbanner>[];
     }
   }
-  static List<Bbanner> parseResponse(String responseBody){
+
+  static List<Bbanner> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Bbanner>((json) => Bbanner.fromJson(json)).toList();
   }

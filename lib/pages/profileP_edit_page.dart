@@ -128,7 +128,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
     var stream =
         new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://gowjr0771.cafe24.com/film_info_img$no.php");
+    var uri = Uri.parse("http://211.110.1.58/film_info_img$no.php");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile("image", stream, length,
@@ -193,7 +193,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.network(
-                              'http://gowjr0771.cafe24.com/film_pro_profile/${_proSelect![0].profile_img}',
+                              'http://211.110.1.58/film_pro_profile/${_proSelect![0].profile_img}',
                               height: 65.0,
                               width: 65.0,
                               fit: BoxFit.cover,
@@ -576,7 +576,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.network(
-                                        'http://gowjr0771.cafe24.com/film_pro_info/${_proSelect![0].img1}',
+                                        'http://211.110.1.58/film_pro_info/${_proSelect![0].img1}',
                                         width: 120.0,
                                         height: 120.0,
                                         fit: BoxFit.cover,
@@ -597,7 +597,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.network(
-                                        'http://gowjr0771.cafe24.com/film_pro_info/${_proSelect![0].img2}',
+                                        'http://211.110.1.58/film_pro_info/${_proSelect![0].img2}',
                                         width: 120.0,
                                         height: 120.0,
                                         fit: BoxFit.cover,
@@ -618,7 +618,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.network(
-                                        'http://gowjr0771.cafe24.com/film_pro_info/${_proSelect![0].img3}',
+                                        'http://211.110.1.58/film_pro_info/${_proSelect![0].img3}',
                                         width: 120.0,
                                         height: 120.0,
                                         fit: BoxFit.cover,
@@ -639,7 +639,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.network(
-                                        'http://gowjr0771.cafe24.com/film_pro_info/${_proSelect![0].img4}',
+                                        'http://211.110.1.58/film_pro_info/${_proSelect![0].img4}',
                                         width: 120.0,
                                         height: 120.0,
                                         fit: BoxFit.cover,
@@ -660,7 +660,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
                                       child: Image.network(
-                                        'http://gowjr0771.cafe24.com/film_pro_info/${_proSelect![0].img5}',
+                                        'http://211.110.1.58/film_pro_info/${_proSelect![0].img5}',
                                         width: 120.0,
                                         height: 120.0,
                                         fit: BoxFit.cover,

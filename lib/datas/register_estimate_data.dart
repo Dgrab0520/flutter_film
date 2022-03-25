@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class RegisterEstimate_Data {
-  static const ROOT = "http://gowjr0771.cafe24.com/registerEstimate.php";
+  static const ROOT = "http://211.110.1.58/registerEstimate.php";
   static const _ADD_ESTIMATE_ACTION = "ADD_ESTIMATE";
   static const _UPDATE_STATE_ACTION = "UPDATE_STATE";
 

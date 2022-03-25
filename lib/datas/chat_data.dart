@@ -11,8 +11,8 @@ String getRandomString() => String.fromCharCodes(Iterable.generate(
     10, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
 class ChatData {
-  static const ROOT = "http://gowjr0771.cafe24.com/film_chat.php";
-  static const root = "http://gowjr0771.cafe24.com/film_chat.php";
+  static const ROOT = "http://211.110.1.58/film_chat.php";
+  static const root = "http://211.110.1.58/film_chat.php";
   static const LIST_ACTION = "LIST";
   static const WRITE_ACTION = "WRITE";
   static const CHAT_LIST_ACTION = "CHAT_LIST";
@@ -20,8 +20,6 @@ class ChatData {
   static const CUS_CHECK_ACTION = 'CUS_CHECK';
   static const ESTIMATE_CHAT_ACTION = 'ESTIMATE_CHAT';
   static const UPDATE_CHECK_ACTION = "UPDATE_CHECK";
-
-
 
   // //전문가일때 채팅목록 불러오기
   // static Future<List<ChatRoom>> getChatList(
@@ -68,7 +66,6 @@ class ChatData {
   // }
   //
 
-
   //채팅 불러오기
   static Future<List<Chat>> getChat(String estimateId) async {
     print("estimateId : $estimateId");
@@ -92,27 +89,29 @@ class ChatData {
   }
 
   //견적성 작성 후 채팅 입력
-  static Future<String> inserChatting(String estimate_id, String estimate_detail) async {
-    try{
+  static Future<String> inserChatting(
+      String estimate_id, String estimate_detail) async {
+    try {
       var map = Map<String, dynamic>();
       map['action'] = ESTIMATE_CHAT_ACTION;
       map['estimate_id'] = estimate_id;
       map['estimate_detail'] = estimate_detail;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('Pro Chat Response: ${response.body}');
-      if(200 == response.body){
+      if (200 == response.body) {
         return response.body;
-      }else{
+      } else {
         return "error";
       }
-    }catch(e){
+    } catch (e) {
       return "error";
     }
   }
 
   //채팅 상태 변경
-  static Future<String> updateCheck(String estimate_id, String condition, String _isPro) async {
-    try{
+  static Future<String> updateCheck(
+      String estimate_id, String condition, String _isPro) async {
+    try {
       var map = Map<String, dynamic>();
       map['action'] = UPDATE_CHECK_ACTION;
       map['estimate_id'] = estimate_id;
@@ -121,12 +120,12 @@ class ChatData {
       map['_isPro'] = _isPro;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('Update Check Response : ${response.body}');
-      if(200 == response.body){
+      if (200 == response.body) {
         return response.body;
-      }else{
+      } else {
         return "error";
       }
-    }catch(e){
+    } catch (e) {
       return "error";
     }
   }

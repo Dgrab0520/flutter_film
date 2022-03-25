@@ -121,7 +121,7 @@ class _ProfilePPageState extends State<ProfilePPage> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: Image.network(
-                            'http://gowjr0771.cafe24.com/film_pro_profile/${_proSelect![0].profile_img}',
+                            'http://211.110.1.58/film_pro_profile/${_proSelect![0].profile_img}',
                             height: 65.0,
                             width: 65.0,
                             fit: BoxFit.cover,

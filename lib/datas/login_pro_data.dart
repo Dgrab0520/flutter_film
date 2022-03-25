@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import '../models/userCheck_model.dart';
 
 class Login_Data {
-  static const ROOT = "http://gowjr0771.cafe24.com/film_login.php";
+  static const ROOT = "http://211.110.1.58/film_login.php";
   static const _GET_LOGIN_ACTION = 'LOGIN';
 
   static Future<List<String>> getLogin(String user_id, String user_pw) async {
     setToken(String token) async {
-      var url = Uri.parse('http://gowjr0771.cafe24.com/pro_token.php');
+      var url = Uri.parse('http://211.110.1.58/pro_token.php');
       var result = await http.post(url, body: {
         "token": token,
         "user_id": user_id,

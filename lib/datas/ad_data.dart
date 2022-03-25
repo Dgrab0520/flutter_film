@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/ad_model.dart';
 
-
-class Ad_Data{
-  static const ROOT = 'http://gowjr0771.cafe24.com/film_ad.php';
+class Ad_Data {
+  static const ROOT = 'http://211.110.1.58/film_ad.php';
   static const _GET_AD_ACTION = 'GET_AD';
   static const _GET_AD_ACTION2 = 'GET_AD2';
 
@@ -43,8 +44,7 @@ class Ad_Data{
     }
   }
 
-
-  static List<Ad> parseResponse(String responseBody){
+  static List<Ad> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<Ad>((json) => Ad.fromJson(json)).toList();
   }

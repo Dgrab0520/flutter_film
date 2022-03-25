@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Area_Data {
-  static const ROOT = 'http://gowjr0771.cafe24.com/customer_area.php';
+  static const ROOT = 'http://211.110.1.58/customer_area.php';
   static const _ADD_AREA_ACTION = 'ADD_AREA';
   static const _UPDATE_TOKEN_ACTION = 'UPDATE_TOKEN';
 

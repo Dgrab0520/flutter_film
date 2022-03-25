@@ -12,9 +12,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:select_form_field/select_form_field.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:async/async.dart';
-
 
 class MainPage extends StatefulWidget {
   @override
@@ -35,70 +32,26 @@ class _MainPageState extends State<MainPage> {
   String selected = '수도권';
   static final storage = FlutterSecureStorage();
 
-
-
   final List<Map<String, dynamic>> _items = [
     {
       'value': '수도권',
       'label': '수도권',
     },
 
-    {
-      "value" : "부산",
-      "label" : "부산"
-    },
-    {
-      "value" : "대구",
-      "label" : "대구"
-    },
-    {
-      "value" : "광주",
-      "label" : "광주"
-    },
-    {
-      "value" : "대전",
-      "label" : "대전"
-    },
-    {
-      "value" : "울산",
-      "label" : "울산"
-    },
-    {
-      "value" : "세종",
-      "label" : "세종"
-    },
-    {
-      "value" : "강원",
-      "label" : "강원"
-    },
-    {
-      "value" : "경남",
-      "label" : "경남"
-    },
-    {
-      "value" : "경북",
-      "label" : "경북"
-    },
-    {
-      "value" : "전남",
-      "label" : "전남"
-    },
-    {
-      "value" : "전북",
-      "label" : "전북"
-    },
-    {
-      "value" : "충남",
-      "label" : "충남"
-    },
-    {
-      "value" : "충북",
-      "label" : "충북"
-    },
-    {
-      "value" : "제주",
-      "label" : "제주"
-    },
+    {"value": "부산", "label": "부산"},
+    {"value": "대구", "label": "대구"},
+    {"value": "광주", "label": "광주"},
+    {"value": "대전", "label": "대전"},
+    {"value": "울산", "label": "울산"},
+    {"value": "세종", "label": "세종"},
+    {"value": "강원", "label": "강원"},
+    {"value": "경남", "label": "경남"},
+    {"value": "경북", "label": "경북"},
+    {"value": "전남", "label": "전남"},
+    {"value": "전북", "label": "전북"},
+    {"value": "충남", "label": "충남"},
+    {"value": "충북", "label": "충북"},
+    {"value": "제주", "label": "제주"},
     // {
     //   'value': '경기',
     //   'label': '경기',
@@ -126,6 +79,7 @@ class _MainPageState extends State<MainPage> {
     _isLogin = Get.parameters['param'];
     print('Is login = $_isLogin');
     _userId = Get.parameters['id'];
+    print(_userId);
     _userType = Get.parameters['type'];
     _isLoading = false;
     _getProRecom();
@@ -133,17 +87,17 @@ class _MainPageState extends State<MainPage> {
     _getBanner();
   }
 
-
   //고객 회원가입 여부 조회
   _getCustomer() {
     if (_userType == 'customer') {
       setState(() {
+        print("_userId : $_userId");
         CustomerCheck_Data.getCustomerCheck(user_id).then((customerCheck) {
           setState(() {
             _customerCheck = customerCheck;
           });
           print(user_id);
-          print(_userId);
+          print("_userId : $_userId");
           print(customerCheck.length);
           if (customerCheck.isEmpty == false) {
             setState(() {
@@ -196,7 +150,7 @@ class _MainPageState extends State<MainPage> {
       _default_Image = user.kakaoAccount!.profile!.isDefaultImage!;
       profile_image = user.kakaoAccount!.profile!.profileImageUrl!;
     });
-    print(user_id);
+    print("user_id : $user_id");
     _getCustomer();
   }
 
@@ -474,7 +428,7 @@ class _MainPageState extends State<MainPage> {
                                   children: <Widget>[
                                     CircleAvatar(
                                       backgroundImage: NetworkImage(
-                                        'http://gowjr0771.cafe24.com/film_pro_profile/${_proUser[index].profile_img}',
+                                        'http://211.110.1.58/film_pro_profile/${_proUser[index].profile_img}',
                                       ),
                                       radius: 20,
                                       backgroundColor: Colors.white,

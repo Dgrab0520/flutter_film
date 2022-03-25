@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var stream =
         new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://gowjr0771.cafe24.com/film_pro_profile.php");
+    var uri = Uri.parse("http://211.110.1.58/film_pro_profile.php");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile("image", stream, length,
@@ -138,7 +138,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       // _image
                                       // ?
                                       NetworkImage(
-                                    'http://gowjr0771.cafe24.com/film_pro_profile/${_user_info![0].profile_img}',
+                                    'http://211.110.1.58/film_pro_profile/${_user_info![0].profile_img}',
                                   ),
                                   // :
                                   // FileImage(File(_image.path)),

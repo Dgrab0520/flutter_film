@@ -1,13 +1,15 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../models/select_rating_model.dart';
 
-class SelectRating_Data{
-  static const ROOT = "http://gowjr0771.cafe24.com/film_select_rating.php";
+class SelectRating_Data {
+  static const ROOT = "http://211.110.1.58/film_select_rating.php";
   static const _GET_RATING_ACTION = "GET_RATING";
 
   static Future<List<Select_Rating>> getRating(String pro_id) async {
-    try{
+    try {
       var map = Map<String, dynamic>();
       map['action'] = _GET_RATING_ACTION;
       map['pro_id'] = pro_id;
@@ -15,18 +17,21 @@ class SelectRating_Data{
       var values = response.body;
       print("Select Rating Response: $values");
 
-      if(200 == response.statusCode){
+      if (200 == response.statusCode) {
         List<Select_Rating> list = parseResponse(response.body);
         return list;
-      }else{
+      } else {
         return <Select_Rating>[];
       }
-    }catch(e){
+    } catch (e) {
       return <Select_Rating>[];
     }
   }
-  static List<Select_Rating> parseResponse(String responseBody){
+
+  static List<Select_Rating> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Select_Rating>((json) => Select_Rating.fromJson(json)).toList();
+    return parsed
+        .map<Select_Rating>((json) => Select_Rating.fromJson(json))
+        .toList();
   }
 }

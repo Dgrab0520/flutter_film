@@ -143,8 +143,7 @@ class _SmsPageState extends State<SmsPage> {
                         ),
                         TextButton(
                             onPressed: () {
-                              launch(
-                                  'https://gowjr0771.cafe24.com/privacy.html',
+                              launch('https://211.110.1.58/privacy.html',
                                   forceWebView: true);
                             },
                             child: Text('자세히 보기')),

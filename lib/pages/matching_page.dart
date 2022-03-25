@@ -157,7 +157,7 @@ class _MatchingPageState extends State<MatchingPage> {
                                     children: [
                                       CircleAvatar(
                                         backgroundImage: NetworkImage(
-                                          'http://gowjr0771.cafe24.com/film_pro_profile/${_prolist![index].profile_img}',
+                                          'http://211.110.1.58/film_pro_profile/${_prolist![index].profile_img}',
                                         ),
                                         backgroundColor: Colors.white,
                                         radius: 25,

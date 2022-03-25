@@ -1,6 +1,4 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_film/datas/customer_area_data.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
@@ -272,10 +270,15 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                         onPressed: () => _loginWithKakao(),
                                       )),
+                                  // ElevatedButton(
+                                  //     onPressed: () {
+                                  //       Get.offAllNamed(
+                                  //           '/main/true?type=customer');
+                                  //     },
+                                  //     child: Text("테스트")),
                                   SizedBox(
                                     height: 250.0,
                                   ),
-
                                   Text(
                                     '고객센터',
                                     style: TextStyle(

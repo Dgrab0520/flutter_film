@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../models/select_estimate_model.dart';
 
 class Estimate_Select_Data extends GetxController {
-  static const ROOT = 'http://gowjr0771.cafe24.com/film_estimate_select.php';
+  static const ROOT = 'http://211.110.1.58/film_estimate_select.php';
   static const _SELECT_ESTIMATE_ACTION = 'ESTIMATE_SELECT';
   static const _SELECT_ESTIMATE_CHECK = "ESTIMATE_CHECK";
   static const _SELECT_PRO_ACTION = "SELECT_PRO";

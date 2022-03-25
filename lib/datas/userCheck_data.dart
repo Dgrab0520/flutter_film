@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import '../models/userCheck_model.dart';
 
 class UserCheck_Data {
-  static const ROOT = "http://gowjr0771.cafe24.com/film_userCheck.php";
+  static const ROOT = "http://211.110.1.58/film_userCheck.php";
   static const _GET_USER_CHECK = 'USER_CK';
   static const _GET_USER_ALL = 'USER_CK_ALL';
 
