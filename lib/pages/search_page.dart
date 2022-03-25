@@ -135,17 +135,16 @@ class _SearchPageState extends State<SearchPage>{
                           ),
                           onPressed: (){
                             if(phoneController.text.isNotEmpty && nameController.text.isNotEmpty && phoneController.text.length == 11){
-                              Get.toNamed("/searchResult/ID?user_id='None'&&user_phone=${phoneController.text}");
-                              // Navigator.of(context).push(
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             Certification(
-                              //           id: 'None',
-                              //           phone: phoneController.text,
-                              //           name: nameController.text,
-                              //         )
-                              //     )
-                              // );
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Certification(
+                                        id: 'None',
+                                        phone: phoneController.text,
+                                        name: nameController.text,
+                                      )
+                                  )
+                              );
                             }else{
                               Get.snackbar("Error", "이름 또는 휴대폰 번호를 확인해주세요");
                             }
