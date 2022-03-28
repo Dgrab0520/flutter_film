@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -221,7 +218,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // initDynamicLinks();
+    initDynamicLinks();
     FirebaseMessaging.instance.getInitialMessage();
 
     FirebaseMessaging.onMessage.listen((message) {
@@ -254,38 +251,34 @@ class _SplashPageState extends State<SplashPage> {
     });
 
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-
   }
 
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+      final Uri? deepLink = dynamicLink?.link;
 
+      print(deepLink);
+      print(deepLink?.path);
 
-  // void initDynamicLinks() async {
-  //   FirebaseDynamicLinks.instance.onLink(
-  //       onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-  //         final Uri? deepLink = dynamicLink?.link;
-  //
-  //         print('deeplink is : $deepLink');
-  //         if (deepLink != null) {
-  //           // 앱이 resume 상태일 때(백그라운드에 있을 때)
-  //           _movePage(deepLinkPath: deepLink.path);
-  //         }
-  //       }, onError: (OnLinkErrorException e) async {
-  //     print('onLinkError');
-  //     print(e.message);
-  //   });
-  //
-  //   final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
-  //   final Uri? deepLink = data?.link;
-  //
-  //
-  //   if (deepLink != null) {
-  //     // dynamic link로 꺼진 앱을 킬 때
-  //     _movePage(deepLinkPath: deepLink.path);
-  //   } else {
-  //     // 일반적으로 App을 켰을 때
-  //     _movePage();
-  //   }
-  // }
+      if (deepLink != null) {
+        Get.to(LoginPage());
+      }
+    }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
+
+    final PendingDynamicLinkData? data =
+        await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri? deepLink = data?.link;
+
+    print(deepLink);
+
+    if (deepLink != null) {
+      // do something
+    }
+  }
   //
   //
   // void _movePage({String? deepLinkPath}) async {
@@ -312,11 +305,6 @@ class _SplashPageState extends State<SplashPage> {
   //   //   }
   //   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -328,9 +316,6 @@ class _SplashPageState extends State<SplashPage> {
           imageSrc: 'assets/images/logo.gif',
           text: '인테리어 필름 시공전문',
           backgroundColor: Colors.white,
-        )
-    );
+        ));
   }
 }
-
-
