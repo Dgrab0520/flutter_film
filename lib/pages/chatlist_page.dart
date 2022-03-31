@@ -67,7 +67,7 @@ class ChatListPage extends StatelessWidget {
                       child: Text("진행중인 채팅이 없습니다"),
                     )
               : const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('채팅이 없습니다'),
                 ),
         )
     );
@@ -119,30 +119,30 @@ class ChatBox extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: isPro == 'Cus'
-                          ? estimateController.estimate[index].user_check == '1'
-                            ? Container(
-                                width: 25.0,
-                                height: 25.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  border: Border.all(width: 1.0, color: Colors.deepOrange),
-                                ),
-                                child:  Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
-                              )
-                            : Container()
-                          : estimateController.estimate[index].pro_check == '1'
-                            ? Container(
-                                width: 25.0,
-                                height: 25.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  border: Border.all(width: 1.0, color: Colors.deepOrange),
-                                ),
-                                child: Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
-                              )
-                            : Container(),
+                      ? estimateController.estimate[index].user_check == '1'
+                      ? Container(
+                      width: 25.0,
+                      height: 25.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(width: 1.0, color: Colors.deepOrange),
+                      ),
+                      child:  Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
+                  )
+                      : Container()
+                      : estimateController.estimate[index].pro_check == '1'
+                      ? Container(
+                      width: 25.0,
+                      height: 25.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(width: 1.0, color: Colors.deepOrange),
+                      ),
+                      child: Center(child: Text('N', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.deepOrange),),)
+                  )
+                      : Container(),
 
                 )
               ],

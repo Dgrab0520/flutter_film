@@ -190,7 +190,11 @@ class _MainPageState extends State<MainPage> {
                   //     Colors.black.withOpacity(0.5), BlendMode.dstATop
                   // ),
                   image: AssetImage(
-                    'assets/images/interior5.jpg',
+                    _isLogin == 'true'
+                      ?
+                      'assets/images/back_login2.jpg'
+                      :
+                      'assets/images/interior5.jpg',
                   ),
                 )),
                 child: Stack(
@@ -232,21 +236,21 @@ class _MainPageState extends State<MainPage> {
                               ],
                             ),
                             Text(
-                              '5명의 전문가로 비교견적 받아보세요',
+                              '전문가에게 비교견적 받아보세요',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w700),
                             ),
-                            Text(
-                              '비교견적 1분 OK',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            // Text(
+                            //   '비교견적 1분 OK',
+                            //   textAlign: TextAlign.center,
+                            //   style: TextStyle(
+                            //       fontSize: 14.0,
+                            //       color: Colors.grey,
+                            //       fontWeight: FontWeight.w700),
+                            // ),
                             // Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
                             //   TextStyle(
                             //       fontSize: 15.0,
@@ -262,7 +266,7 @@ class _MainPageState extends State<MainPage> {
                             //   ),
                             // ),
                             SizedBox(
-                              height: 25.0,
+                              height: 40.0,
                             ),
 
                             _isLogin == 'true'
