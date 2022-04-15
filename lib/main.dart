@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
             page: () => ChatPage(),
           ),
           GetPage(
-            name: '/deposit/:par`am',
+            name: '/deposit/:param',
             page: () => DepositPage(),
           ),
           GetPage(

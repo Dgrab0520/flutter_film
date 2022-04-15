@@ -296,12 +296,12 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                   onTap: () {
                                     Get.to(DetailScreen(
                                         path:
-                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img1}'));
-                                  },
+                                            'http://211.110.1.58/film_pro_info/${_proSelect![0].img1}'));
+                                  }, //url change
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15.0),
                                     child: Image.network(
-                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img1}',
+                                      'http://211.110.1.58/film_pro_info/${_proSelect![0].img1}',
                                       width: 130.0,
                                       height: 130.0,
                                       fit: BoxFit.cover,
@@ -315,12 +315,12 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                   onTap: () {
                                     Get.to(DetailScreen(
                                         path:
-                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img2}'));
+                                            'http://211.110.1.58/film_pro_info/${_proSelect![0].img2}'));
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15.0),
                                     child: Image.network(
-                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img2}',
+                                      'http://211.110.1.58/film_pro_info/${_proSelect![0].img2}',
                                       width: 130.0,
                                       height: 130.0,
                                       fit: BoxFit.cover,
@@ -334,12 +334,12 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                   onTap: () {
                                     Get.to(DetailScreen(
                                         path:
-                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img3}'));
+                                            'http://211.110.1.58/film_pro_info/${_proSelect![0].img3}'));
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15.0),
                                     child: Image.network(
-                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img3}',
+                                      'http://211.110.1.58/film_pro_info/${_proSelect![0].img3}',
                                       width: 130.0,
                                       height: 130.0,
                                       fit: BoxFit.cover,
@@ -353,12 +353,12 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                   onTap: () {
                                     Get.to(DetailScreen(
                                         path:
-                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img4}'));
+                                            'http://211.110.1.58/film_pro_info/${_proSelect![0].img4}'));
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15.0),
                                     child: Image.network(
-                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img4}',
+                                      'http://211.110.1.58/film_pro_info/${_proSelect![0].img4}',
                                       width: 130.0,
                                       height: 130.0,
                                       fit: BoxFit.cover,
@@ -372,12 +372,12 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                   onTap: () {
                                     Get.to(DetailScreen(
                                         path:
-                                            'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img5}'));
+                                            'http://211.110.1.58/film_pro_info/${_proSelect![0].img5}'));
                                   },
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15.0),
                                     child: Image.network(
-                                      'https://d-grab.co.kr/film_pro_info/${_proSelect![0].img5}',
+                                      'http://211.110.1.58/film_pro_info/${_proSelect![0].img5}',
                                       width: 130.0,
                                       height: 130.0,
                                       fit: BoxFit.cover,

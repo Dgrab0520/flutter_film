@@ -211,6 +211,7 @@ class _ProMyPageState extends State<ProMyPage> {
               ),
               GestureDetector(
                 onTap: () {
+                  print(_userId);
                   Get.toNamed('/deposit/:true?pro_id=$_userId');
                   print('success');
                 },
