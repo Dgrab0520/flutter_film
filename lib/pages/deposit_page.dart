@@ -13,7 +13,7 @@ class DepositPage extends StatefulWidget {
 class _DepositPageState extends State<DepositPage> {
   String? _userId;
 
-  List<Pro_Point>? _pro_point;
+  List<Pro_Point>? _pro_point = [];
   bool _isLoading = false;
 
   @override
@@ -23,7 +23,6 @@ class _DepositPageState extends State<DepositPage> {
 
   @override
   void initState() {
-    _pro_point = [];
     _userId = Get.parameters['pro_id'];
     _getProPoint();
     super.initState();
@@ -32,6 +31,7 @@ class _DepositPageState extends State<DepositPage> {
   _getProPoint() {
     print(_userId);
     ProPoint_Data.getProPointInfo(_userId!).then((pro_point) {
+      print(pro_point);
       setState(() {
         _pro_point = pro_point;
         _isLoading = true;
@@ -73,67 +73,69 @@ class _DepositPageState extends State<DepositPage> {
                   children: <Widget>[
                     Expanded(
                       flex: 3,
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              '무통장 입금',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '무통장 입금',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 20),
+                            width: Get.width,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF38334f),
+                              border: Border.all(
+                                  width: 3.0,
+                                  color: Color(0xFF140a45)), // 박스 테두리 만들기
+                              borderRadius:
+                                  BorderRadius.circular(10), //박스 둥글게 만들기
                             ),
-                            Container(
-                              padding: const EdgeInsets.only(left: 20),
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              width: Get.width,
-                              height: 150,
-                              decoration: BoxDecoration(
-                                color: Color(0xFF38334f),
-                                border: Border.all(
-                                    width: 3.0,
-                                    color: Color(0xFF140a45)), // 박스 테두리 만들기
-                                borderRadius:
-                                    BorderRadius.circular(10), //박스 둥글게 만들기
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Text(
-                                    '계좌번호 (우리은행 / 공간 인테리어)',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    '1005-504-180971',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Spacer(),
-                                  Text(
-                                    '입금 확인은 영업일 기준 최대 3시간이 소요됩니다.',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                Text(
+                                  '계좌번호 (우리은행 / 공간 인테리어)',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  '1005-504-180971',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Spacer(),
+                                Text(
+                                  '입금 확인은 영업일 기준 최대 3시간이 소요됩니다.',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Expanded(
                         flex: 7,
@@ -142,7 +144,7 @@ class _DepositPageState extends State<DepositPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(
-                              height: 20.0,
+                              height: 10.0,
                             ),
                             Text(
                               '포인트 사용 내역',
@@ -150,7 +152,7 @@ class _DepositPageState extends State<DepositPage> {
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 15.0,
+                              height: 5.0,
                             ),
                             Container(
                                 width: Get.width,

@@ -18,6 +18,7 @@ class ProPoint_Data {
       print('Pro Point Reseponse: ${response.body}');
       if (200 == response.statusCode) {
         List<Pro_Point> list = parseResponse(response.body);
+        print(list);
         return list;
       } else {
         return <Pro_Point>[];

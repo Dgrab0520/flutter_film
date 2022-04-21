@@ -774,7 +774,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage> {
                                                       Row(
                                                         children: <Widget>[
                                                           Text(
-                                                            '${(_ratingSelect![index].user_id).substring(0, 3)}****',
+                                                            '${(_ratingSelect![index].user_id).substring(0, _ratingSelect![index].user_id.length - 1)}****',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .black,

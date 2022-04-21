@@ -488,7 +488,7 @@ class _ProfilePPageState extends State<ProfilePPage> {
                                                     Row(
                                                       children: <Widget>[
                                                         Text(
-                                                          '${_ratingSelect![index].user_id.substring(0, 5)}****',
+                                                          '${_ratingSelect![index].user_id.substring(0, _ratingSelect![index].user_id.length - 1)}****',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black,

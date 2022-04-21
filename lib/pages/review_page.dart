@@ -48,7 +48,7 @@ class _ReviewPageState extends State<ReviewPage> {
         centerTitle: true,
         elevation: 0.0,
         title: Text(
-          '전문가 매칭',
+          '리뷰',
           style: TextStyle(
             color: Colors.black,
             fontSize: 16.0,
